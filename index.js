@@ -1,4 +1,5 @@
 const express = require('express')
+const jwt = require('jsonwebtoken')
 const PORT = 7000;
 
 const app = express();
@@ -10,9 +11,15 @@ app.get('/',(req,res)=>{
 })
 
 app.post('/auth/login',(req,res)=>{
-    res.json(req.body)
+    const token = jwt.sign({
+        name: req.body.name,
+        password: req.body.password
+    },
+    'secretCryptoKey')
+    res.json({token})
 })
 app.listen(PORT, (err)=>{
+    
     if(err){
         console.log(`Error when try start a server!`);
     } else {
