@@ -1,7 +1,13 @@
 const express = require('express')
 const jwt = require('jsonwebtoken')
-const PORT = 7000;
+const mongoose = require('mongoose')
 
+const PORT = 7000;
+mongoose.connect('mongodb+srv://Admin:123123123@cluster0.afio7fk.mongodb.net/?retryWrites=true&w=majority').then(()=>{
+    console.log('DB connected');
+}).catch((err)=>{
+    console.log('DB connection error', err);
+})
 const app = express();
 
 app.use(express.json());
