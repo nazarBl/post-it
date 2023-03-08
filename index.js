@@ -1,13 +1,17 @@
 const express = require('express')
+const PORT = 7000;
 
 const app = express();
 
-const PORT = 7000;
+app.use(express.json());
 
 app.get('/',(req,res)=>{
     res.send('Home page')
 })
 
+app.post('/auth/login',(req,res)=>{
+    res.json(req.body)
+})
 app.listen(PORT, (err)=>{
     if(err){
         console.log(`Error when try start a server!`);
