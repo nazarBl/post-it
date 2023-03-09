@@ -1,0 +1,7 @@
+This libray used to encrypt data
+
+we need create encrypt-key name algorythm
+
+const salt = bcrypt.genSalt(10); - generate special encrypt alphabet to uncode encrypted data
+
+ const passwordHash = await bcrypt.hash(password, salt) - encrypting data "password" with method "salt"
