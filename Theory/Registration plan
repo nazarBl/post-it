@@ -1,0 +1,4 @@
+1. Validation (express-validator)
+2. Encrypt  password (or any data) (bcrypt)
+3. Create "doc" file for send to database (create new object of class UserModel, save it with .save()) (mongoose)
+4. Create "jwt" token and give it user id (jwt.sign({<id>:<variable with id>}, '<uncrypt key name>')) 

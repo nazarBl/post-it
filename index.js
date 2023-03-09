@@ -22,13 +22,14 @@ app.get('/',(req,res)=>{
 })
 
 app.post('/auth/registration', registerValidation, async (req,res)=>{
-    const errors = validationResult(req);
+    try {
+        const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json(errors.array())
     }
-    const password = req.body.password;
+    const userPassword = req.body.password;
     const salt = await bcrypt.genSalt(10);
-    const passwordHash = await bcrypt.hash(password, salt);
+    const passwordHash = await bcrypt.hash(userPassword, salt);
 
     const doc = new UserModel({
         email:req.body.email,
@@ -39,7 +40,26 @@ app.post('/auth/registration', registerValidation, async (req,res)=>{
 
     const user = await doc.save()
 
-    res.json(user);
+    const token = jwt.sign({
+        _id: user._id,
+    },
+    'secretKiey',
+    {
+        expiresIn:'30d',
+    })
+
+    const {password, ...userData} = user._doc
+
+    res.json({
+        ...userData,
+        token
+    });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message:'Registration failed!'
+        })
+    }
 })
 
 app.listen(PORT, (err)=>{
