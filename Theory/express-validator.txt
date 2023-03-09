@@ -1,0 +1,14 @@
+This node.js libray helps make validation more quicker
+
+express-validator needs body object which holds data-parameters which it will check
+
+{validationResult} get req as parameter for express-validator to check 
+
+const registerValidation = [
+    body('email',<error message>).isEmail(),
+    body('password',<error message>).isLength({min:5}),
+    body('name',<error message>).isLength({min:3}),
+    body('avatarUrl',<error message>).optional().isURL(),
+]
+
+Code below make standarts to follow while express-validator validate data

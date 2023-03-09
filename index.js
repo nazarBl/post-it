@@ -1,6 +1,8 @@
 const express = require('express')
 const jwt = require('jsonwebtoken')
 const mongoose = require('mongoose')
+const registerValidation = require('./validations/auth')
+const {validationResult} = require('express-validator')
 
 const PORT = 7000;
 mongoose.connect('mongodb+srv://Admin:123123123@cluster0.afio7fk.mongodb.net/?retryWrites=true&w=majority').then(()=>{
@@ -16,13 +18,15 @@ app.get('/',(req,res)=>{
     res.send('Home page')
 })
 
-app.post('/auth/login',(req,res)=>{
-    const token = jwt.sign({
-        name: req.body.name,
-        password: req.body.password
-    },
-    'secretCryptoKey')
-    res.json({token})
+app.post('/auth/registration', registerValidation, (req,res)=>{
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json(errors.array())
+    }
+
+    res.json({
+        success:true,
+    });
 })
 app.listen(PORT, (err)=>{
     
