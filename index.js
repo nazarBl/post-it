@@ -6,6 +6,7 @@ const registerValidation = require('./validations/auth')
 const {validationResult} = require('express-validator')
 
 const UserModel = require('./models/User')
+const checkAuth = require('./middlewares/checkAuth')
 
 const PORT = 7000;
 mongoose.connect('mongodb+srv://Admin:123123123@cluster0.afio7fk.mongodb.net/post-it?retryWrites=true&w=majority').then(()=>{
@@ -100,6 +101,21 @@ app.post('/auth/registration', registerValidation, async (req,res)=>{
     }
 })
 
+app.get('/auth/me', checkAuth, async (req,res)=>{
+    try {
+        const user = await UserModel.findById(req.userId)
+      
+
+        if(!user){
+            return res.status(404).json({
+                message:`User not found!`
+            })
+        }
+        const {password, ...userData} = user._doc
+
+    res.json(userData);
+    } catch (error) {}
+})
 app.listen(PORT, (err)=>{
     
     if(err){

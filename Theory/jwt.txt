@@ -1,0 +1,5 @@
+Used top create token to veriy user
+
+jwt.sign({<key>:value},<uncrypt key name>, {<additional options>}) - crypt info into token with uncrypt key name
+
+jwt.verify(<token>, <encrypt key>) - parse token to data with uncrypt key mentioned
