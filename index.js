@@ -21,6 +21,44 @@ app.get('/',(req,res)=>{
     res.send('Home page')
 })
 
+app.post('/auth/login', async (req,res)=>{
+    try {
+        const user = await UserModel.findOne({ email:req.body.email })
+        if(!user){
+            return res.status(404).json({
+                message:'Wrong login or password!'
+            })
+        }
+
+        const isValidPass = bcrypt.compare(req.body.password, user._doc.password)
+
+        if (!isValidPass){
+            return res.status(404).json({
+                message:'Wrong login or password!'
+            })
+        }
+
+        const token = jwt.sign({
+            _id: user._id,
+        },
+        'secretKiey',
+        {
+            expiresIn:'30d',
+        })
+    
+        const {password, ...userData} = user._doc
+    
+        res.json({
+            ...userData,
+            token
+        });
+    } catch (error) {
+        res.status(500).json({
+            message:'Authorization failed!'
+        })
+    }
+})
+
 app.post('/auth/registration', registerValidation, async (req,res)=>{
     try {
         const errors = validationResult(req);
