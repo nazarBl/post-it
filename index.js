@@ -1,6 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const registerValidation = require('./validations/auth')
+const {registerValidation, loginValidation} = require('./validations')
 const checkAuth = require('./middlewares/checkAuth')
 const {register,login,getMe} = require('./controllers/UserController.js')
 
@@ -21,7 +21,7 @@ app.get('/',(req,res)=>{
 })
 
 app.post('/auth/registration', registerValidation, register)
-app.post('/auth/login', login)
+app.post('/auth/login', loginValidation, login)
 app.get('/auth/me', checkAuth, getMe)
 
 app.listen(PORT, (err)=>{
