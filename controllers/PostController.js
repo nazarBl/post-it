@@ -36,5 +36,30 @@ module.exports = {
             })
         }
     },
+    getPostById: async (req,res)=>{
+        try {
+            const postId = req.params.id;
    
+            const post = await PostModel.findOneAndUpdate(
+            {
+                _id: postId,
+            },
+            {
+                $inc: {viewsCount: 1 },
+            },
+            {
+                returnDocument: 'after',
+            }
+            
+        )      
+
+        res.json(post)
+
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({
+                message:'Cant receive a post'
+            })
+        }
+    }
 }
