@@ -14,7 +14,7 @@ module.exports = {
 
             const post = await doc.save()
 
-            res.json(post)
+            res.json(post._doc)
             
         } catch (error) {
             console.log(error);

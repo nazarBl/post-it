@@ -1,8 +1,9 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const {registerValidation, loginValidation} = require('./validations')
+const {registerValidation, loginValidation, newPostValidation} = require('./validations')
 const checkAuth = require('./middlewares/checkAuth')
 const {register,login,getMe} = require('./controllers/UserController.js')
+const PostController = require ('./controllers/PostController')
 
 const PORT = 7000;
 
@@ -27,7 +28,7 @@ app.get('/auth/me', checkAuth, getMe)
 
 // app.get('/posts', PostController.getAllPosts);
 // app.get('/posts:id', PostController.getPostById);
-// app.post('/posts', PostController.create);
+app.post('/posts', checkAuth, newPostValidation, PostController.create); 
 // app.delete('/post', PostController.remove); 
 // app.patch('/post', PostController.update);
 
