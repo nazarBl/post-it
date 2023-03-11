@@ -30,7 +30,7 @@ app.get('/posts', PostController.getAllPosts);
 app.get('/posts/:id', PostController.getPostById);
 app.post('/posts', checkAuth, newPostValidation, PostController.create); 
 app.delete('/posts/:id', checkAuth, PostController.remove); 
-app.patch('/posts/:id', PostController.update);
+app.patch('/posts/:id', checkAuth, PostController.update);
 
 app.listen(PORT, (err)=>{
     
