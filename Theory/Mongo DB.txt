@@ -1,0 +1,15 @@
+const user = doc.save() - "save" method send document "doc" to server   
+cosnt user = UserModel.findById('52') - get user with id 52 from mongo database
+
+const posts = PostModel.find().populate('author').exec() - make relationship with author field while getting all models which are created according to PostModel scheme
+
+PostModel.findOneAndUpdate({ - find document in DB and update it (send updated/unupdated file back)
+           _id:postId, - search parameter to find (post with PostModel class with mentioned id)
+        },
+        {
+            $inc: {viewsCount: 1 }, - what to update (increment key viewsCount by 1)
+        },
+        {
+            returnDocument: 'after', - document will be returned after count is rised
+        },
+        (err, doc)=>{}) - function to be executed

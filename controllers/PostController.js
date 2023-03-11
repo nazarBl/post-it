@@ -14,7 +14,7 @@ module.exports = {
 
             const post = await doc.save()
 
-            res.json(post._doc)
+            res.json(post)
             
         } catch (error) {
             console.log(error);
@@ -22,5 +22,19 @@ module.exports = {
                 message:'Failed to create new post'
             })
         }
-    }
+    },
+    getAllPosts: async (req,res)=>{
+        try {
+
+        const posts = await PostModel.find().populate('author').exec();
+        res.json(posts)
+
+        } catch (error) {
+            console.log(error);
+            res.status(404).json({
+                message:'Cannot receive posts'
+            })
+        }
+    },
+   
 }
