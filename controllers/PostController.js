@@ -81,5 +81,31 @@ module.exports = {
                 message:'Post does not exist'
             })
         }
+    },
+    update: async (req,res)=>{
+        try {
+            const postId = req.params.id;
+
+            await PostModel.updateOne({
+                _id:postId,
+            },
+            {
+                title:req.body.title,
+                text: req.body.text,
+                imageUrl: req.body.imageUrl,
+                author: req.userId,
+                viewsCount: req.body.viewsCount,
+                tags: req.body.tags,
+            })
+
+            res.json({
+                message:'Post was successfully updated'
+            })
+        } catch (error) {
+            console.log(error);
+            res.json(500).json({
+                message:'Post updating failed'
+            })
+        }
     }
 }
