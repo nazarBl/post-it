@@ -29,7 +29,7 @@ app.get('/auth/me', checkAuth, getMe)
 app.get('/posts', PostController.getAllPosts);
 app.get('/posts/:id', PostController.getPostById);
 app.post('/posts', checkAuth, newPostValidation, PostController.create); 
-// app.delete('/post', PostController.remove); 
+app.delete('/posts/:id', PostController.remove); 
 // app.patch('/post', PostController.update);
 
 app.listen(PORT, (err)=>{

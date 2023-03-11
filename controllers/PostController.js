@@ -61,5 +61,25 @@ module.exports = {
                 message:'Cant receive a post'
             })
         }
+    },
+    remove: async (req,res)=>{
+        try {
+            const postId = req.params.id;
+
+            await PostModel.findOneAndDelete(
+                {
+                    _id:postId
+                },
+                res.json({
+                    message:'Post was succesfully deleted'
+                })
+            )
+            
+        } catch (error) {
+            console.log(error);
+            res.json(404).json({
+                message:'Post does not exist'
+            })
+        }
     }
 }
