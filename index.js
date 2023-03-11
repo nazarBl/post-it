@@ -24,6 +24,13 @@ app.post('/auth/registration', registerValidation, register)
 app.post('/auth/login', loginValidation, login)
 app.get('/auth/me', checkAuth, getMe)
 
+
+// app.get('/posts', PostController.getAllPosts);
+// app.get('/posts:id', PostController.getPostById);
+// app.post('/posts', PostController.create);
+// app.delete('/post', PostController.remove); 
+// app.patch('/post', PostController.update);
+
 app.listen(PORT, (err)=>{
     
     if(err){
