@@ -12,3 +12,5 @@ const registerValidation = [
 ]
 
 Code below make standarts to follow while express-validator validate data
+
+const errors = validationResult(req) - method "validationResult" need to e imported from express-validator libray. It is used to store errors if validation is not passed

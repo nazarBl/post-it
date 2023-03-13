@@ -3,7 +3,8 @@ const mongoose = require('mongoose')
 const multer = require('multer')
 
 const {registerValidation, loginValidation, newPostValidation} = require('./validations')
-const checkAuth = require('./middlewares/checkAuth')
+const checkAuth = require('./utils/checkAuth')
+const handleValidationErrors = require('./utils/handleValidationErrors')
 const {register,login,getMe} = require('./controllers/UserController.js')
 const PostController = require ('./controllers/PostController')
 
@@ -35,8 +36,8 @@ app.get('/',(req,res)=>{
     res.send('Home page')
 })
 
-app.post('/auth/registration', registerValidation, register)
-app.post('/auth/login', loginValidation, login)
+app.post('/auth/registration', registerValidation, handleValidationErrors, register)
+app.post('/auth/login', loginValidation, handleValidationErrors, login)
 app.get('/auth/me', checkAuth, getMe)
 
 app.post('/upload', checkAuth, upload.single('image'), (req,res)=>{
@@ -47,9 +48,9 @@ app.post('/upload', checkAuth, upload.single('image'), (req,res)=>{
 
 app.get('/posts', PostController.getAllPosts);
 app.get('/posts/:id', PostController.getPostById);
-app.post('/posts', checkAuth, newPostValidation, PostController.create); 
+app.post('/posts', checkAuth, newPostValidation, handleValidationErrors, PostController.create); 
 app.delete('/posts/:id', checkAuth, PostController.remove); 
-app.patch('/posts/:id', checkAuth, PostController.update);
+app.patch('/posts/:id', checkAuth,newPostValidation, handleValidationErrors, PostController.update);
 
 app.listen(PORT, (err)=>{
     
