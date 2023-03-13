@@ -1,0 +1,5 @@
+app.use('/uploads', express.static('uploads')) - when got request to "/uploads" path with file-urls from "uploads"-folder as parameter it will show them in browser
+
+static method understands that client make request for static file and return it to client if found it at server in specified place
+
+"static" method NOT show files with .jfif resolution, it will download it instead
