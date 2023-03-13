@@ -3,10 +3,8 @@ const mongoose = require('mongoose')
 const multer = require('multer')
 
 const {registerValidation, loginValidation, newPostValidation} = require('./validations')
-const checkAuth = require('./utils/checkAuth')
-const handleValidationErrors = require('./utils/handleValidationErrors')
-const {register,login,getMe} = require('./controllers/UserController.js')
-const PostController = require ('./controllers/PostController')
+const {checkAuth, handleValidationErrors} = require('./utils/index.js')
+const {UserController, PostController} = require('./controllers/index.js')
 
 const PORT = 7000;
 
@@ -31,14 +29,15 @@ const upload = multer({storage:imgStorage})
 
 app.use(express.json());
 app.use('/uploads', express.static('uploads'))
+app.use('/auth', authRouter)
 
 app.get('/',(req,res)=>{
     res.send('Home page')
 })
 
-app.post('/auth/registration', registerValidation, handleValidationErrors, register)
-app.post('/auth/login', loginValidation, handleValidationErrors, login)
-app.get('/auth/me', checkAuth, getMe)
+app.post('/auth/registration', registerValidation, handleValidationErrors, UserController.register)
+app.post('/auth/login', loginValidation, handleValidationErrors, UserController.login)
+app.get('/auth/me', checkAuth, UserController.getMe)
 
 app.post('/upload', checkAuth, upload.single('image'), (req,res)=>{
     res.json({

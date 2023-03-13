@@ -3,7 +3,7 @@ const bcrypt =require('bcrypt')
 
 const {validationResult} = require('express-validator')
 const UserModel = require('../models/User')
-module.exports = {
+const UserController = {
     register : async (req,res)=>{
         try {
             const errors = validationResult(req);
@@ -100,4 +100,5 @@ module.exports = {
     }
 }
 
+module.exports = UserController;
 
