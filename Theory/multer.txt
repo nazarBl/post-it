@@ -1,0 +1,21 @@
+Libray "multer" used to work with uploading files
+
+===================================diskStorage===================================
+destination - runs when file is uploading describe where to store files
+fileName - runs when file is uploading to describe name of file before upload
+
+multer.diskStorage({ - mthod creates storage for files (image storage in this project)
+    destination: (_, __, cb)=>{
+        cb(null, 'uploads') null means we not get error, "uploads" - name of folder where to store files
+    },
+    filename (_, file, cb)=>{
+        cb(null, file.originalname) with no errors set file name to value of "originalname"-key from "file"
+    }
+})
+
+cosnt upload = multer({storage: <storage name>}) - variable "upload" now can be used to work with multer storage
+
+upload.single('image') - "single" is middleware of multer which wait for file with name 'image'
+this middleware also creates key "file" in express request which holds properties of uploading file
+
+when creating form-data "post"-request use image-<file to upload> as key-value
