@@ -29,7 +29,6 @@ const upload = multer({storage:imgStorage})
 
 app.use(express.json());
 app.use('/uploads', express.static('uploads'))
-app.use('/auth', authRouter)
 
 app.get('/',(req,res)=>{
     res.send('Home page')
