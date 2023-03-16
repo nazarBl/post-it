@@ -8,7 +8,7 @@ import { SideComments } from '../components/SideComments';
 
 export const Home = () => {
 
-    const testUrl ='https://c4.wallpaperflare.com/wallpaper/875/738/429/chicago-cityscape-high-rise-buildings-wallpaper-preview.jpg'
+    const testUrl ='https://www.planetware.com/wpimages/2019/11/canada-in-pictures-beautiful-places-to-photograph-morraine-lake.jpg'
   return (
     <>
         <Tabs style={{ marginBottom: 15 }} value={0} aria-label="basic tabs example">
@@ -18,7 +18,7 @@ export const Home = () => {
         <Grid container spacing={4}>
             <Grid xs={8} item>
                 {[...Array(5)].map(()=>( // means show posts by 5
-                    <Post imageUrl={testUrl} title='Test Title' tags={['why', 'we', 'title', 'test']} viewsCount={771} commentsCount={23}/>
+                    <Post imageUrl={testUrl} title='Test Title' author = {{fullName:"Kim", avatarUrl:"https://mui.com/static/images/avatar/3.jpg"}}tags={['why', 'we', 'title', 'test']} viewsCount={771} commentsCount={23}/>
                 ))}
             </Grid>
             <Grid xs={4} item>

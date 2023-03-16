@@ -1,5 +1,6 @@
 import { Container } from '@mui/material';
 import { Header } from './components/Header';
+import { FullPost } from './Pages/FullPost';
 import { Home } from './Pages/Home';
 
 function App() {
@@ -7,7 +8,8 @@ function App() {
     <>
       <Header />
       <Container maxWidth='lg'>
-        <Home />
+        {/* <Home /> */}
+        <FullPost />
       </Container>
     </>
   );
