@@ -1,5 +1,5 @@
 import React from 'react'
-import { UserInfo } from '../../UserInfo/UserInfo'
+import { UserInfo } from '../UserInfo/UserInfo'
 import EyeIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import CommentIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 

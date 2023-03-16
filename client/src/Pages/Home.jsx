@@ -1,8 +1,10 @@
 import React from 'react';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Grid from '@mui/material/Grid';
-import { Post } from '../components/Header/Post';
+import {Tabs, Tab, Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText} from '@mui/material';
+import TagIcon from "@mui/icons-material/Tag";
+
+import { Post } from '../components/Post';
+import { SideBlock } from '../components/SideBlock';
+import { SideComments } from '../components/SideComments';
 
 export const Home = () => {
 
@@ -20,11 +22,37 @@ export const Home = () => {
                 ))}
             </Grid>
             <Grid xs={4} item>
-                TAGS HERE
-            </Grid>
-            <Grid xs={4} item>
-                COMMENTS HERE
-            </Grid>
+                <SideBlock title = "Tags">
+                    <List>
+                        <ListItem disablePadding>
+                            <ListItemButton>
+                                <ListItemIcon>
+                                    <TagIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="react" />
+                            </ListItemButton>
+                        </ListItem>
+                    </List>
+                </SideBlock>
+                <SideBlock title="Comments">
+                    <SideComments  items={[
+                {
+                  user: {
+                    fullName: "John Torm",
+                    avatarUrl: "https://mui.com/static/images/avatar/1.jpg",
+                  },
+                  text: "Nice place!",
+                },
+                {
+                  user: {
+                    fullName: "Bob Loren",
+                    avatarUrl: "https://mui.com/static/images/avatar/2.jpg",
+                  },
+                  text: "What about pricing?",
+                },
+              ]}/>
+                </SideBlock>
+            </Grid> 
         </Grid>
     </>  
   ) 
