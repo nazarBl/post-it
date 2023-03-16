@@ -1,10 +1,10 @@
-import Button from '@mui/material/Button';
+import { Header } from './components/Header';
 
 function App() {
   return (
     <div>
+      <Header />
       <div>Hi frontend</div>
-      <Button variant='contained' >Hello World</Button> {/*trying material UI here xD*/}
     </div>
   );
   
