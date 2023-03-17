@@ -4,7 +4,7 @@ import style from "./AddComment.module.scss";
 
 import { Avatar, Button, TextField} from "@mui/material";
 
-export const AddComment = () => {
+export const Index = () => {
   return (
     <>
       <div className={style.root}>

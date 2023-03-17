@@ -1,14 +1,33 @@
 import React from 'react';
 import { UserInfo } from '../UserInfo';
+import { PostSkeleton } from "./Skeleton";
+
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Clear";
+import EditIcon from "@mui/icons-material/Edit";
 import EyeIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import CommentIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 import clsx from 'clsx';
 
 import style from './Post.module.scss';
 
-export const Post = ({_id, title, text, imageUrl, author, createdAt, tags, viewsCount, commentsCount, children, isFullPost}) => {
+export const Post = ({_id, title, text, imageUrl, author, createdAt, tags, viewsCount, commentsCount, children, isFullPost, isLoading, isEditable}) => {
+  if (isLoading) {
+    return <PostSkeleton />;
+  }
+
   return (
     <div className={clsx(style.root, { [style.rootFull]: isFullPost })}>
+      {isEditable && (
+        <div className={style.editButtons}>
+          <IconButton color="primary">
+            <EditIcon />
+          </IconButton>
+          <IconButton color="secondary">
+            <DeleteIcon />
+          </IconButton>
+        </div>
+      )}
         <img className={clsx(style.image, { [style.imageFull]: isFullPost })} src ={imageUrl} alt='title'/>
         <div className={style.wrapper}>
           <UserInfo {...author} extraInfo={createdAt} />

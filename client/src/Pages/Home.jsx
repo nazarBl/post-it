@@ -18,7 +18,7 @@ export const Home = () => {
         <Grid container spacing={4}>
             <Grid xs={8} item>
                 {[...Array(5)].map(()=>( // means show posts by 5
-                    <Post imageUrl={testUrl} title='Test Title' author = {{fullName:"Kim", avatarUrl:"https://mui.com/static/images/avatar/3.jpg"}}tags={['why', 'we', 'title', 'test']} viewsCount={771} commentsCount={23}/>
+                    <Post isLoading = {false} imageUrl={testUrl} title='Test Title' author = {{fullName:"Kim", avatarUrl:"https://mui.com/static/images/avatar/3.jpg"}}tags={['why', 'we', 'title', 'test']} viewsCount={771} commentsCount={23}/>
                 ))}
             </Grid>
             <Grid xs={4} item>
