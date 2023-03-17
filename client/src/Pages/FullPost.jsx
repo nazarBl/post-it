@@ -2,8 +2,7 @@ import React from 'react';
 
 import { Index } from '../components/AddComment/';
 import { Post } from "../components/Post";
-import { SideBlock } from "../components/SideBlock";
-import { SideComments } from "../components/SideComments";
+import { CommentsBlock } from "../components/CommentsBlock";
 
 export const FullPost = () => {
   return (
@@ -22,8 +21,8 @@ export const FullPost = () => {
         >
         <p>So I am finnally here in Malaysia! If someone would tell me before I will spend my vacation in place like this i would never believe them! Luckily for me I get opportunity to take tickets at extra low price so I think "Why not, Murphy?" This place is amazing, people are so kind, food is delicious, but what really made me excited is those jaw-dropping views including one from my apartment. I am so happy not to miss chance be in Malasyia this week!</p>
         </Post>
-        <SideBlock title="Comments">
-            <SideComments items={[
+        
+            <CommentsBlock items={[
             {
               user: {
                 fullName: "Lynn Karter",
@@ -39,9 +38,9 @@ export const FullPost = () => {
               text: "I want join you ASAP",
             },
           ]}
-        />
+        >
         <Index />
-        </SideBlock>
+        </CommentsBlock>
     </>
   )
 }

@@ -1,5 +1,5 @@
 import { Container } from '@mui/material';
-import { Header }  from './components/Header';
+import { Header }  from './components';
 
 import { Home, FullPost, Registration, AddPost, Login } from "./Pages";
 
