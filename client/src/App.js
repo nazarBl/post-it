@@ -4,7 +4,8 @@ import { Header } from './components/Header';
 import { AddPost } from './Pages/AddPost';
 import { FullPost } from './Pages/FullPost';
 import { Home } from './Pages/Home';
-import {Login} from './Pages/Login'
+import {Login} from './Pages/Login';
+import { Registration } from './Pages/Registration';
 
 function App() {
   return (
@@ -14,7 +15,8 @@ function App() {
         {/* <Home /> */}
         {/* <FullPost /> */}
         {/* <AddPost /> */}
-        <Login />
+        {/* <Login /> */}
+        <Registration />
       </Container>
     </>
   );
