@@ -1,14 +1,21 @@
 import React from 'react';
-import axios
+import axios from '../axios.js'
+import {useDispatch} from 'react-redux'
 import {Tabs, Tab, Grid} from '@mui/material';
 
 import { Post } from '../components/';
 import { TagsBlock } from '../components';
 import { CommentsBlock } from '../components/';
+import { fetchPosts } from '../redux/slices/homeSlice.js';
 
 export const Home = () => {
+  const dispatch = useDispatch();
 
-    const testUrl ='https://www.planetware.com/wpimages/2019/11/canada-in-pictures-beautiful-places-to-photograph-morraine-lake.jpg'
+  React.useEffect(()=>{
+   dispatch(fetchPosts())
+  },[])
+
+  const testUrl ='https://www.planetware.com/wpimages/2019/11/canada-in-pictures-beautiful-places-to-photograph-morraine-lake.jpg'
   return (
     <>
         <Tabs style={{ marginBottom: 15 }} value={0} aria-label="basic tabs example">

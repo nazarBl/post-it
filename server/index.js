@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const multer = require('multer')
+const cors = require('cors')
 
 const {registerValidation, loginValidation, newPostValidation} = require('./validations')
 const {checkAuth, handleValidationErrors} = require('./utils/index.js')
@@ -28,6 +29,7 @@ const imgStorage = multer.diskStorage({
 const upload = multer({storage:imgStorage})
 
 app.use(express.json());
+app.use(cors())
 app.use('/uploads', express.static('uploads'))
 
 app.get('/',(req,res)=>{
