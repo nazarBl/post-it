@@ -1,6 +1,5 @@
 import React from 'react';
 import {Tabs, Tab, Grid} from '@mui/material';
-import TagIcon from "@mui/icons-material/Tag";
 
 import { Post } from '../components/';
 import { TagsBlock } from '../components';

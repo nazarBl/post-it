@@ -4,15 +4,15 @@ import React from 'react'
 import style from './Header.module.scss'
 
 export const Header = () => {
-    const isLoginned = false;
-    const logOutHandler = {};
+    const isLoginned = true;
+    const onClickLogOut = ()=>{};
 
     return (
     <div className={style.wrapper}>
         <Container maxWidth='lg'>
             <div className={style.inner}>
-                <a href="jfe">
-                    <div className={style.logo} href='/jife'>POST IT</div>
+                <a href="/">
+                    <div className={style.logo}>POST IT</div>
                 </a>
                 <div className={style.authBtns}>
                     {isLoginned?
@@ -20,7 +20,7 @@ export const Header = () => {
                             <a href="/posts/create">
                                 <Button variant = "contained">New Post</Button>
                             </a>
-                            <Button onClick={logOutHandler} variant="contained" color="error">Log Out</Button>
+                            <Button onClick={onClickLogOut} variant="contained" color="error">Log Out</Button>
                         </>:
                         <>
                             <a href="auth/login">

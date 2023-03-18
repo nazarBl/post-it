@@ -6,7 +6,12 @@ import "easymde/dist/easymde.min.css";
 import style from "./AddPost.module.scss";
 
 export const AddPost = () => {
-  const [value, setValue] = React.useState("");
+  const imageUrl = '';
+  const [value, setValue] = React.useState('');
+
+  const handleChangeFile = () => {};
+
+  const onClickRemoveImage = () => {};
 
   const onChange = React.useCallback((value) => {
     setValue(value);
@@ -17,7 +22,7 @@ export const AddPost = () => {
       spellChecker: false,
       maxHeight: "400px",
       autofocus: true,
-      placeholder: "Введите текст...",
+      placeholder: "Enter text...",
       status: false,
       autosave: {
         enabled: true,
@@ -32,6 +37,15 @@ export const AddPost = () => {
       <Button variant="outlined" size="large">
         Show preview
       </Button>
+      <input type="file" onChange={handleChangeFile} hidden />
+      {imageUrl && (
+        <Button variant="contained" color="error" onClick={onClickRemoveImage}>
+          Delete
+        </Button>
+      )}
+      {imageUrl && (
+        <img className={style.image} src={`http://localhost:4444${imageUrl}`} alt="Uploaded" />
+      )}
       <br />
       <br />
       <TextField
@@ -56,7 +70,9 @@ export const AddPost = () => {
         <Button size="large" variant="contained">
           Pubic post
         </Button>
-        <Button size="large">Cancel</Button>
+        <a href = '/'>
+          <Button size="large">Cancel</Button>
+        </a>
       </div>
     </Paper>
   );

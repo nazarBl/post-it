@@ -16,19 +16,27 @@ export const Post = ({_id, title, text, imageUrl, author, createdAt, tags, views
     return <PostSkeleton />;
   }
 
+  const onClickRemove = () =>{}
+
   return (
     <div className={clsx(style.root, { [style.rootFull]: isFullPost })}>
       {isEditable && (
         <div className={style.editButtons}>
-          <IconButton color="primary">
-            <EditIcon />
-          </IconButton>
-          <IconButton color="secondary">
+          <a href={`/posts/${_id}/edit`}>
+            <IconButton color="primary">
+              <EditIcon />
+            </IconButton>
+          </a>
+          <IconButton onClick = {onClickRemove} color="secondary">
             <DeleteIcon />
           </IconButton>
         </div>
       )}
-        <img className={clsx(style.image, { [style.imageFull]: isFullPost })} src ={imageUrl} alt='title'/>
+        {imageUrl && (<img className={clsx(style.image, { [style.imageFull]: isFullPost })} 
+        src ={imageUrl} 
+        alt='title'
+        />)}
+        
         <div className={style.wrapper}>
           <UserInfo {...author} extraInfo={createdAt} />
           <div className={style.indention}> 
