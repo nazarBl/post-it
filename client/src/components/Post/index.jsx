@@ -10,6 +10,7 @@ import CommentIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 import clsx from 'clsx';
 
 import style from './Post.module.scss';
+import { Link } from 'react-router-dom';
 
 export const Post = ({_id, title, text, imageUrl, author, createdAt, tags, viewsCount, commentsCount, children, isFullPost, isLoading, isEditable}) => {
   if (isLoading) {
@@ -22,11 +23,11 @@ export const Post = ({_id, title, text, imageUrl, author, createdAt, tags, views
     <div className={clsx(style.root, { [style.rootFull]: isFullPost })}>
       {isEditable && (
         <div className={style.editButtons}>
-          <a href={`/posts/${_id}/edit`}>
+          <Link to={`/posts/${_id}/edit`}>
             <IconButton color="primary">
               <EditIcon />
             </IconButton>
-          </a>
+          </Link>
           <IconButton onClick = {onClickRemove} color="secondary">
             <DeleteIcon />
           </IconButton>
@@ -41,12 +42,12 @@ export const Post = ({_id, title, text, imageUrl, author, createdAt, tags, views
           <UserInfo {...author} extraInfo={createdAt} />
           <div className={style.indention}> 
               <h2 className={clsx(style.title, { [style.titleFull]: isFullPost })}>
-                {isFullPost ? title : <a href={`/posts/${_id}`}>{title}</a>}
+                {isFullPost ? title : <Link to={`/posts/${_id}`}>{title}</Link>}
               </h2>
               <ul className={style.tags}>
                   {tags.map((name)=>(
                    
-                      <li key={name}> <a href={`/tag/${name}`}>#{name}</a></li>
+                      <li key={name}> <Link to={`/tag/${name}`}>#{name}</Link></li>
                   ))}
               </ul>
               {children && <div className={style.content}>{children}</div>}

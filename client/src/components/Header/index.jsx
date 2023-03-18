@@ -1,6 +1,7 @@
 
 import { Button, Container } from '@mui/material';
 import React from 'react'
+import { Link } from 'react-router-dom';
 import style from './Header.module.scss'
 
 export const Header = () => {
@@ -11,24 +12,24 @@ export const Header = () => {
     <div className={style.wrapper}>
         <Container maxWidth='lg'>
             <div className={style.inner}>
-                <a href="/">
+                <Link to="/">
                     <div className={style.logo}>POST IT</div>
-                </a>
+                </Link>
                 <div className={style.authBtns}>
                     {isLoginned?
                         <>
-                            <a href="/posts/create">
+                            <Link to="/posts/create">
                                 <Button variant = "contained">New Post</Button>
-                            </a>
+                            </Link>
                             <Button onClick={onClickLogOut} variant="contained" color="error">Log Out</Button>
                         </>:
                         <>
-                            <a href="auth/login">
+                            <Link to="auth/login">
                                 <Button variant = "outlined">Sign In</Button>
-                            </a>
-                            <a href="auth/registration">
+                            </Link>
+                            <Link to="auth/registration">
                                 <Button variant ="contained" color = "primary">Sign Up</Button>
-                            </a>
+                            </Link>
                         </>
                     }
                 </div>

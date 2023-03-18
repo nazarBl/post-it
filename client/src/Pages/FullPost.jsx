@@ -8,7 +8,7 @@ export const FullPost = () => {
   return (
     <>  
         <Post
-        _id={1}
+        _id={2}
         title="Vacation in Malaysia"
         imageUrl="https://www.oyorooms.com/blog/wp-content/uploads/2018/06/Featured-Image-Relaxing-places-of-Malaysia.jpg"
         author={{
