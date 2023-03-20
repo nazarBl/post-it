@@ -5,7 +5,7 @@ const cors = require('cors')
 
 const {registerValidation, loginValidation, newPostValidation} = require('./validations')
 const {checkAuth, handleValidationErrors} = require('./utils/index.js')
-const {UserController, PostController} = require('./controllers/index.js')
+const {UserController, PostController, TagsController} = require('./controllers/index.js')
 
 const PORT = 7000;
 
@@ -45,6 +45,8 @@ app.post('/upload', checkAuth, upload.single('image'), (req,res)=>{
         url:`/uploads/${req.file.originalname}`,
     })
 })  
+
+app.get ('/tags', TagsController.getActualTags);
 
 app.get('/posts', PostController.getAllPosts);
 app.get('/posts/:id', PostController.getPostById);

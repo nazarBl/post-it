@@ -5,7 +5,7 @@ import {Tabs, Tab, Grid} from '@mui/material';
 import { Post } from '../components/';
 import { TagsBlock } from '../components';
 import { CommentsBlock } from '../components/';
-import { fetchPosts } from '../redux/slices/homeSlice.js';
+import { fetchPosts, fetchTags } from '../redux/slices/homeSlice.js';
 
 export const Home = () => {
   const dispatch = useDispatch();
@@ -14,9 +14,11 @@ export const Home = () => {
   console.log(posts,tags);
 
   const isPostsLoading = posts.status === 'loading';
+  const isTagsLoading = tags.status === 'loading';
 
   React.useEffect(()=>{
    dispatch(fetchPosts())
+   dispatch(fetchTags())
   },[])
 
   return (
@@ -29,16 +31,16 @@ export const Home = () => {
             <Grid xs={8} item>
                 {(isPostsLoading? [...Array(5)]: posts.items).map((post, index)=>
                 isPostsLoading ? (<Post isLoading={true} key={index}/>) : ( 
-                <Post _id={post._id} isLoading = {false} imageUrl={post.imageUrl} title={post.title} author = {post.author} createdAt = {post.createdAt} tags={post.tags} viewsCount={post.viewsCount} commentsCount={post.commentsCount}/>
+                <Post _id={post._id} key={index} isLoading = {false} imageUrl={post.imageUrl} title={post.title} author = {post.author} createdAt = {post.createdAt} tags={post.tags} viewsCount={post.viewsCount} commentsCount={post.commentsCount}/>
             )
                 )}
             </Grid>
             <Grid xs={4} item>
                 <TagsBlock 
-                  items = {[
-                    "Vacation", "Summer2023", "freetime " 
-                  ]}
-                  isLoading ={false}
+                  items = {
+                    tags.items
+                  }
+                  isLoading ={isTagsLoading}
                 />
                 <CommentsBlock 
                   items={[
