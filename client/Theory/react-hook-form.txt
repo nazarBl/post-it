@@ -1,0 +1,10 @@
+useForm - hook from 'react-hook-form, used to describe form with its keys
+
+useForm.register - "register" is used to mention what inputs of form should be checked for validation
+useForm.handleSubmit - "handleSubmit" is used to check if registered fields pass validation and start function after submit
+
+<form onSumbit= handleSubmit(<function to start when submitted>) - handle submit will run function if form will pass validation check
+
+useForm.register('email', {required: 'Enter your email please'}) -"register" method create new input with name "email". 
+
+required means this field must be filled, if not - client will get message "Enter your email please"
