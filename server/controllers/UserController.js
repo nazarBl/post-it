@@ -53,14 +53,14 @@ const UserController = {
                     message:'Wrong login or password!'
                 })
             }
-    
+
             const isValidPass = bcrypt.compare(req.body.password, user._doc.password)
     
             if (!isValidPass){
                 return res.status(404).json({
                     message:'Wrong login or password!'
                 })
-            }
+            }   
     
             const token = jwt.sign({
                 _id: user._id,

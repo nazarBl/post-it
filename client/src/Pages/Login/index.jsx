@@ -1,10 +1,14 @@
 import React from 'react';
 import { Button, Paper, TextField, Typography } from '@mui/material';
-import {useForm} from 'react-hook-form'
+import {useForm} from 'react-hook-form';
+import {useNavigate} from 'react-router-dom'
+import {useDispatch, useSelector} from 'react-redux';
+import {fetchUserData} from '../../redux/slices/auth'
 
 import style from './Login.module.scss';
 
 export const Login = () => {
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
@@ -19,7 +23,7 @@ export const Login = () => {
   })
 
   const onSubmit = (values)=>{
-    console.log(values);
+    dispatch(fetchUserData(values))
   }
   
   return (

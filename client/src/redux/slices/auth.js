@@ -2,8 +2,9 @@ import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import axios from '../../axios.js'
 
 export const fetchUserData = createAsyncThunk('auth/fetchUserData', async (params)=>{
- const {userData} = await axios.post('/auth/login', params)
- return userData
+ const {data} = await axios.post('/auth/login', params)
+ console.log(data);
+ return data
 })
 const initialState ={
     userData: null,
@@ -15,11 +16,12 @@ const authSlice =createSlice({
     initialState,
     extraReducers:{
         [fetchUserData.pending]:(state)=>{
-            state.satus = 'loading';
+            state.status = 'loading';
             state.userData = null;
         },
-        [fetchUserData.fullfilled]:(state, action)=>{
+        [fetchUserData.fulfilled]:(state, action)=>{
             state.status = 'loaded';
+            console.log(action);
             state.userData = action.payload;
         },
         [fetchUserData.rejected]:(state)=>{
@@ -28,5 +30,7 @@ const authSlice =createSlice({
         }
     }
 })
+
+export const checkIfAuth = (state)=> Boolean(state.userData)
 
 export const authReducer = authSlice.reducer;
