@@ -1,13 +1,14 @@
 import React from 'react';
 import { Button, Paper, TextField, Typography } from '@mui/material';
 import {useForm} from 'react-hook-form';
-import {useNavigate} from 'react-router-dom'
+import {Navigate, useNavigate} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux';
-import {fetchUserData} from '../../redux/slices/auth'
+import {checkIfAuth, fetchUserData} from '../../redux/slices/auth'
 
 import style from './Login.module.scss';
 
 export const Login = () => {
+  const isAuth = useSelector(checkIfAuth)
   const dispatch = useDispatch();
   const {
     register,
@@ -21,9 +22,13 @@ export const Login = () => {
       password:''
     }
   })
-
+    console.log(isAuth);
   const onSubmit = (values)=>{
     dispatch(fetchUserData(values))
+  }
+
+  if(isAuth){
+    return <Navigate to='/' />
   }
   
   return (

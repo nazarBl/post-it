@@ -2,10 +2,12 @@
 import { Button, Container } from '@mui/material';
 import React from 'react'
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { checkIfAuth } from '../../redux/slices/auth';
 import style from './Header.module.scss'
 
 export const Header = () => {
-    const isLoginned = true;
+    const isLoginned = useSelector(checkIfAuth);    
     const onClickLogOut = ()=>{};
 
     return (

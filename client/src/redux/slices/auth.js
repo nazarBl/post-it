@@ -21,7 +21,6 @@ const authSlice =createSlice({
         },
         [fetchUserData.fulfilled]:(state, action)=>{
             state.status = 'loaded';
-            console.log(action);
             state.userData = action.payload;
         },
         [fetchUserData.rejected]:(state)=>{
@@ -31,6 +30,6 @@ const authSlice =createSlice({
     }
 })
 
-export const checkIfAuth = (state)=> Boolean(state.userData)
+export const checkIfAuth = (state)=> Boolean(state?.auth.userData)
 
 export const authReducer = authSlice.reducer;
