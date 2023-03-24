@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Paper, TextField, Typography } from '@mui/material';
 import {useForm} from 'react-hook-form';
-import {Navigate, useNavigate} from 'react-router-dom'
+import {Navigate} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux';
 import {checkIfAuth, fetchUserData} from '../../redux/slices/auth'
 
@@ -13,18 +13,22 @@ export const Login = () => {
   const {
     register,
     handleSubmit,
-    setError,
     formState: {
-      errors, isValid
+      errors
   }} = useForm({
     defaultValues: {
       email:'',
       password:''
     }
   })
-    console.log(isAuth);
-  const onSubmit = (values)=>{
-    dispatch(fetchUserData(values))
+    const onSubmit = async (values)=>{
+    const data = await dispatch(fetchUserData(values))
+    if(!data.payload){
+      return window.alert('Log In failed!')
+    }
+    if ('token' in data.payload) {
+      window.localStorage.setItem('token', data.payload.token)
+    }
   }
 
   if(isAuth){

@@ -5,6 +5,13 @@ export const fetchUserData = createAsyncThunk('auth/fetchUserData', async (param
     const {data} = await axios.post('/auth/login', params)
     return data
 })
+
+export const fetchAuthMe = createAsyncThunk('auth/getMe', async ()=>{
+     const {data} = await axios.get('/auth/me'); //get params described by middleware in axios.js
+     console.log(data);
+     return data;
+}) 
+
 const initialState ={
     userData: null,
     status:'loading'
@@ -30,11 +37,24 @@ const authSlice =createSlice({
         [fetchUserData.rejected]:(state)=>{
             state.status = 'error';
             state.userData = null;
+        },
+
+        [fetchAuthMe.pending]:(state)=>{
+            state.status = 'loading';
+            state.userData = null;
+        },
+        [fetchAuthMe.fulfilled]:(state, action)=>{
+            state.status = 'loaded';
+            state.userData = action.payload;
+        },
+        [fetchAuthMe.rejected]:(state)=>{
+            state.status = 'error';
+            state.userData = null
         }
     }
 })
 
-export const checkIfAuth = (state)=> Boolean(state?.auth.userData)
+export const checkIfAuth = (state)=> Boolean(state?.auth.userData); //checking if user is logged in
 
 export const authReducer = authSlice.reducer;
 
