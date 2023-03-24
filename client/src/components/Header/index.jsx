@@ -2,13 +2,19 @@
 import { Button, Container } from '@mui/material';
 import React from 'react'
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { checkIfAuth } from '../../redux/slices/auth';
+import { useSelector, useDispatch } from 'react-redux';
+import { checkIfAuth, logOut } from '../../redux/slices/auth';
 import style from './Header.module.scss'
 
 export const Header = () => {
+    const dispatch = useDispatch();
     const isLoginned = useSelector(checkIfAuth);    
-    const onClickLogOut = ()=>{};
+    const onClickLogOut = ()=>{
+        if(window.confirm('Are you sure you want log out?')){
+            dispatch(logOut())
+        }
+        
+    };
 
     return (
     <div className={style.wrapper}>
