@@ -10,6 +10,7 @@ import { fetchPosts, fetchTags } from '../redux/slices/homeSlice.js';
 export const Home = () => {
   const dispatch = useDispatch();
   const {posts, tags} =useSelector(state=>state.home)
+  const {userData} = useSelector(state=>state.auth)
 
   const isPostsLoading = posts.status === 'loading';
   const isTagsLoading = tags.status === 'loading';
@@ -29,7 +30,18 @@ export const Home = () => {
             <Grid xs={8} item>
                 {(isPostsLoading? [...Array(5)]: posts.items).map((post, index)=>
                 isPostsLoading ? (<Post isLoading={true} key={index}/>) : ( 
-                <Post _id={post._id} key={index} isEditable={true} isLoading = {false} imageUrl={post.imageUrl} title={post.title} author = {post.author} createdAt = {post.createdAt} tags={post.tags} viewsCount={post.viewsCount} commentsCount={post.commentsCount}/>
+                <Post 
+                _id={post._id} 
+                key={index} 
+                isEditable={userData?._id===post.author._id} 
+                isLoading = {false} 
+                imageUrl={post.imageUrl} 
+                title={post.title} 
+                author = {post.author} 
+                createdAt = {post.createdAt} 
+                tags={post.tags} 
+                viewsCount={post.viewsCount} 
+                commentsCount={post.commentsCount}/>
             )
                 )}
             </Grid>
