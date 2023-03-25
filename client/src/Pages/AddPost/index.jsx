@@ -4,10 +4,16 @@ import SimpleMDE from "react-simplemde-editor";
 
 import "easymde/dist/easymde.min.css";
 import style from "./AddPost.module.scss";
+import { Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { checkIfAuth } from "../../redux/slices/auth";
 
 export const AddPost = () => {
+  const isAuth = useSelector(checkIfAuth)
   const imageUrl = '';
   const [value, setValue] = React.useState('');
+  const [title, setTitle] = React.useState('');
+  const [tags, setTags] = React.useState('')
 
   const handleChangeFile = () => {};
 
@@ -15,6 +21,7 @@ export const AddPost = () => {
 
   const onChange = React.useCallback((value) => {
     setValue(value);
+
   }, []);
 
   const options = React.useMemo(
@@ -31,6 +38,9 @@ export const AddPost = () => {
     }),
     []
   );
+    if(!isAuth){
+      return <Navigate to='/'/>
+    }
 
   return (
     <Paper style={{ padding: 30 }}>
@@ -52,12 +62,16 @@ export const AddPost = () => {
         classes={{ root: style.title }}
         variant="standard"
         placeholder="Post title..."
+        value ={title}
+        onChange={e=>setTitle(e.target.value)}
         fullWidth
       />
       <TextField
         classes={{ root: style.tags }}
         variant="standard"
         placeholder="Tags"
+        value={tags}
+        onChange={e=>setTags(e.target.value)}
         fullWidth
       />
       <SimpleMDE
