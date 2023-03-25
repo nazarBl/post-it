@@ -6,9 +6,13 @@ export const fetchUserData = createAsyncThunk('auth/fetchUserData', async (param
     return data
 })
 
+export const fetchRegister = createAsyncThunk('auth/fetchRegister', async (values)=>{
+    const {data} = await axios.post('/auth/registration', values)
+    return data
+})
+
 export const fetchAuthMe = createAsyncThunk('auth/getMe', async ()=>{
      const {data} = await axios.get('/auth/me'); //get params described by middleware in axios.js
-     console.log(data);
      return data;
 }) 
 
@@ -50,6 +54,16 @@ const authSlice =createSlice({
         [fetchAuthMe.rejected]:(state)=>{
             state.status = 'error';
             state.userData = null
+        },
+        [fetchRegister.pending]:(state)=>{
+            state.status = 'loading';
+        },
+        [fetchRegister.fulfilled]:(state, action)=>{
+            state.status = 'loaded';
+            state.userData = action.payload;
+        },
+        [fetchRegister.rejected]:(state)=>{
+            state.status = 'error'
         }
     }
 })

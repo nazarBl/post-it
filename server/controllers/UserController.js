@@ -16,7 +16,7 @@ const UserController = {
     
         const doc = new UserModel({
             email:req.body.email,
-            name:req.body.name,  
+            fullName:req.body.fullName,  
             password: passwordHash,
             avatarUrl:req.body.avatarUrl,
         })

@@ -6,7 +6,7 @@ module.exports = {
     registerValidation : [
         body('email','Wrong email!').isEmail(),
         body('password','Password too short!').isLength({min:5}),
-        body('name', 'Uncorrect name!').isLength({min:3}),
+        body('fullName', 'Uncorrect name!').isLength({min:3}),
         body('avatarUrl', 'Wrong avatar url!').optional().isURL(),
     ],
     loginValidation : [

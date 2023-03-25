@@ -13,7 +13,6 @@ function App() {
 
   React.useEffect(()=>{
     dispatch(fetchAuthMe())
-    
   },[dispatch])
   return (
     <>

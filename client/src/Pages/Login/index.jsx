@@ -14,7 +14,8 @@ export const Login = () => {
     register,
     handleSubmit,
     formState: {
-      errors
+      errors,
+      isValid,
   }} = useForm({
     defaultValues: {
       email:'',
@@ -56,7 +57,7 @@ export const Login = () => {
           helperText={errors.password?.message}
           error ={Boolean(errors.password?.message)}
           {...register('password',{required:'Enter password please'})}/>
-        <Button type='submit' size="large" variant="contained" fullWidth>
+        <Button disabled = {!isValid} type='submit' size="large" variant="contained" fullWidth>
           Log in
         </Button>
       </form>
