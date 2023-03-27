@@ -4,27 +4,59 @@ import SimpleMDE from "react-simplemde-editor";
 
 import "easymde/dist/easymde.min.css";
 import style from "./AddPost.module.scss";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { checkIfAuth } from "../../redux/slices/auth";
+import axios from '../../axios.js'
 
 export const AddPost = () => {
   const isAuth = useSelector(checkIfAuth)
-  const imageUrl = '';
-  const [value, setValue] = React.useState('');
+  const [text, setText] = React.useState('');
   const [title, setTitle] = React.useState('');
-  const [tags, setTags] = React.useState('')
+  const [tags, setTags] = React.useState('');
+  const [imageUrl, setImageUrl] = React.useState('')
 
-  const handleChangeFile = () => {};
+  const inputFileRef = React.useRef();
+  const navigate = useNavigate();
 
-  const onClickRemoveImage = () => {};
+  const handleChangeFile = async (event) => {
+    try {
+      const formData = new FormData();
+      const file = event.target.files[0];
+      formData.append('image', file);
+      const {data} = await axios.post('/upload', formData)
+      setImageUrl(data.url);
+    } catch (error) {
+      console.warn(error);
+      alert('Error while uploading your file')
+    }
+  };
+
+  const onClickRemoveImage = () => {
+    setImageUrl('')
+  };
 
   const onChange = React.useCallback((value) => {
-    setValue(value);
-
+    setText(value);
   }, []);
 
-  const options = React.useMemo(
+  const onSubmit = async ()=>{
+    try {
+      const params = {
+        title,
+        text,
+        tags: tags.split(','),
+        imageUrl,
+      }
+      const {data} = await axios.post('/posts', params);
+      const id = data._id;
+      navigate(`/posts/${id}`)
+    } catch (error) {
+      console.warn('Error while creating post')
+    }
+  }
+
+  const options = React.useMemo( // settings for SimpleMDE
     () => ({
       spellChecker: false,
       maxHeight: "400px",
@@ -44,21 +76,19 @@ export const AddPost = () => {
 
   return (
     <Paper style={{ padding: 30 }}>
-      <Button variant="outlined" size="large">
-        Show preview
-      </Button>
-      <input type="file" onChange={handleChangeFile} hidden />
+      <Button onClick ={()=>inputFileRef.current.click()} variant="outlined" size="large"> Show preview </Button>
+      <input ref={inputFileRef} type="file" onChange={handleChangeFile} hidden />
       {imageUrl && (
-        <Button variant="contained" color="error" onClick={onClickRemoveImage}>
-          Delete
-        </Button>
-      )}
-      {imageUrl && (
-        <img className={style.image} src={`http://localhost:4444${imageUrl}`} alt="Uploaded" />
+        <>
+          <Button variant="contained" color="error" onClick={onClickRemoveImage}>
+            Delete
+          </Button>
+          <img className={style.image} src={`http://localhost:7000${imageUrl}`} alt="Uploaded" />
+        </>
       )}
       <br />
       <br />
-      <TextField
+      <TextField // Field for title
         classes={{ root: style.title }}
         variant="standard"
         placeholder="Post title..."
@@ -66,7 +96,7 @@ export const AddPost = () => {
         onChange={e=>setTitle(e.target.value)}
         fullWidth
       />
-      <TextField
+      <TextField // Field for tags
         classes={{ root: style.tags }}
         variant="standard"
         placeholder="Tags"
@@ -74,14 +104,14 @@ export const AddPost = () => {
         onChange={e=>setTags(e.target.value)}
         fullWidth
       />
-      <SimpleMDE
+      <SimpleMDE // Block for post text and tools panel
         className={style.editor}
-        value={value}
+        value={text}
         onChange={onChange}
         options={options}
       />
       <div className={style.buttons}>
-        <Button size="large" variant="contained">
+        <Button onClick={onSubmit} size="large" variant="contained">
           Pubic post
         </Button>
         <a href = '/'>

@@ -16,7 +16,7 @@ module.exports = {
     newPostValidation : [
         body('title','Enter post title!').isLength({min:3}).isString(),
         body('text', 'Enter post text!').isLength({min:10}).isString(),
-        body('tags', 'Wrong tags format').optional().isString(),
+        body('tags', 'Wrong tags format').optional().isArray(),
         body('imageUrl', 'Wrong image link').optional().isString(),
     ]
 

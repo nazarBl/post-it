@@ -3,6 +3,7 @@ const PostModel = require('../models/Post')
 module.exports = {
     create: async (req,res)=>{
         try {
+            console.log(req.body);
             const doc = new PostModel({
                 title:req.body.title,
                 text: req.body.text,
@@ -50,8 +51,7 @@ module.exports = {
             {
                 returnDocument: 'after',
             }
-            
-        )      
+        ).populate('author')
 
         res.json(post)
 
