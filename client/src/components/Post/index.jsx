@@ -11,13 +11,22 @@ import clsx from 'clsx';
 
 import style from './Post.module.scss';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { fetchRemovePost } from '../../redux/slices/homeSlice';
 
 export const Post = ({_id, title, text, imageUrl, author, createdAt, tags, viewsCount, commentsCount, children, isFullPost, isLoading, isEditable}) => {
+
+  const dispatch = useDispatch();
   if (isLoading) {
     return <PostSkeleton />;
   }
 
-  const onClickRemove = () =>{}
+  const onClickRemove = () =>{
+    if (window.confirm('Are you sure you want delete this post?')){
+      dispatch(fetchRemovePost(_id))
+    }
+    
+  }
 
   return (
     <div className={clsx(style.root, { [style.rootFull]: isFullPost })}>
