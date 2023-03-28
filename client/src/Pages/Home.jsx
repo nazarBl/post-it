@@ -35,7 +35,7 @@ export const Home = () => {
                 key={index} 
                 isEditable={userData?._id===post.author._id} 
                 isLoading = {false} 
-                imageUrl={post.imageUrl} 
+                imageUrl={post.imageUrl ? `http://localhost:7000${post.imageUrl}`:''} 
                 title={post.title} 
                 author = {post.author} 
                 createdAt = {post.createdAt} 
