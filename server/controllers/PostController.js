@@ -10,7 +10,7 @@ module.exports = {
                 imageUrl: req.body.imageUrl,
                 author: req.userId,
                 viewsCount: req.body.viewsCount,
-                tags: req.body.tags,
+                tags: req.body.tags.split(','),
             })
 
             const post = await doc.save()
@@ -95,7 +95,7 @@ module.exports = {
                 imageUrl: req.body.imageUrl,
                 author: req.userId,
                 viewsCount: req.body.viewsCount,
-                tags: req.body.tags,
+                tags: req.body.tags.split(','),
             })
 
             res.json({

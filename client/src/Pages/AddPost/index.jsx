@@ -4,7 +4,7 @@ import SimpleMDE from "react-simplemde-editor";
 
 import "easymde/dist/easymde.min.css";
 import style from "./AddPost.module.scss";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { checkIfAuth } from "../../redux/slices/auth";
 import axios from '../../axios.js'
@@ -18,6 +18,8 @@ export const AddPost = () => {
 
   const inputFileRef = React.useRef();
   const navigate = useNavigate();
+  const {id} = useParams();
+  const isEditing = Boolean(id)
 
   const handleChangeFile = async (event) => {
     try {
@@ -45,16 +47,31 @@ export const AddPost = () => {
       const params = {
         title,
         text,
-        tags: tags.split(','),
+        tags,
         imageUrl,
       }
-      const {data} = await axios.post('/posts', params);
-      const id = data._id;
-      navigate(`/posts/${id}`)
+
+      const {data} = isEditing?
+      await axios.patch(`/posts/${id}`, params):
+      await axios.post('/posts', params)
+
+      const _id = isEditing? id : data._id;
+      navigate(`/posts/${_id}`)
     } catch (error) {
-      console.warn('Error while creating post')
+      console.warn(error)
     }
   }
+  
+  React.useEffect(()=>{
+    if(id){
+      axios.get(`/posts/${id}`).then(({data})=>{
+        setTitle(data.title);
+        setText(data.text);
+        setTags(data.tags);
+        setImageUrl(data.imageUrl);
+      }).catch(err=>console.log(err))
+    }
+  },[id])
 
   const options = React.useMemo( // settings for SimpleMDE
     () => ({
@@ -112,7 +129,7 @@ export const AddPost = () => {
       />
       <div className={style.buttons}>
         <Button onClick={onSubmit} size="large" variant="contained">
-          Pubic post
+          {isEditing?'Save':'Public post'}
         </Button>
         <a href = '/'>
           <Button size="large">Cancel</Button>
