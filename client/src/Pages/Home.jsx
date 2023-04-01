@@ -1,6 +1,7 @@
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux'
 import {Tabs, Tab, Grid} from '@mui/material';
+import {Link} from 'react-router-dom';
 
 import { Post } from '../components/';
 import { TagsBlock } from '../components';
@@ -19,12 +20,25 @@ export const Home = () => {
    dispatch(fetchPosts())
    dispatch(fetchTags())
   },[dispatch])
-
+  const pathname = window.location.pathname
   return (
     <>
-        <Tabs style={{ marginBottom: 15 }} value={0} aria-label="basic tabs example">
-            <Tab label="New" />
-            <Tab label="Popular" />
+  
+        <Tabs style={{ marginBottom: 15 }} value={pathname} aria-label="basic tabs example">
+            <Tab
+              label="New"
+              component = {Link}
+              value = {'/'}
+              to={'/'}
+            />
+  
+            <Tab 
+              label="Popular"
+              component = {Link}
+              to={'/popular'}
+              value = {'/popular'}
+            />
+          
         </Tabs>
         <Grid container spacing={4}>
             <Grid xs={8} item>
