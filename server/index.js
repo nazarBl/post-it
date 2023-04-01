@@ -17,7 +17,7 @@ mongoose.connect('mongodb+srv://Admin:123123123@cluster0.afio7fk.mongodb.net/?re
 
 const app = express();
 
-const imgStorage = multer.diskStorage({
+const imgStorage = multer.diskStorage({ //multer lib to work with images uploading
     destination: (_, __, cb)=>{
         cb(null,'uploads')
     },

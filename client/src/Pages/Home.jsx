@@ -35,8 +35,8 @@ export const Home = () => {
             <Tab 
               label="Popular"
               component = {Link}
-              to={'/popular'}
-              value = {'/popular'}
+              to={'/posts/popular'}
+              value = {'/posts/popular'}
             />
           
         </Tabs>
