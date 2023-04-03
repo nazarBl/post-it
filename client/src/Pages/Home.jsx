@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom';
 import { Post } from '../components/';
 import { TagsBlock } from '../components';
 import { CommentsBlock } from '../components/';
-import { fetchPosts, fetchTags } from '../redux/slices/homeSlice.js';
+import { fetchPopularPosts, fetchPosts, fetchTags } from '../redux/slices/homeSlice.js';
 
 export const Home = () => {
   const dispatch = useDispatch();
@@ -17,9 +17,13 @@ export const Home = () => {
   const isTagsLoading = tags.status === 'loading';
 
   React.useEffect(()=>{
-   dispatch(fetchPosts())
+   if (window.location.pathname==='/popular'){
+    dispatch(fetchPopularPosts())
+   } else{
+    dispatch(fetchPosts())
+   }   
    dispatch(fetchTags())
-  },[dispatch])
+  },[dispatch, window.location.pathname])
   const pathname = window.location.pathname
   return (
     <>
@@ -35,8 +39,8 @@ export const Home = () => {
             <Tab 
               label="Popular"
               component = {Link}
-              to={'/posts/popular'}
-              value = {'/posts/popular'}
+              value = {'/popular'}
+              to={'/popular'}
             />
           
         </Tabs>

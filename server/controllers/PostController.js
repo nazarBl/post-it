@@ -1,7 +1,7 @@
 const PostModel = require('../models/Post')
 
 module.exports = {
-    create: async (req,res)=>{
+    create: async (req, res)=>{
         try {
             console.log(req.body);
             const doc = new PostModel({
@@ -24,7 +24,7 @@ module.exports = {
             })
         }
     },
-    getAllPosts: async (req,res)=>{
+    getAllPosts: async (req, res)=>{
         try {
 
         const posts = await PostModel.find().populate('author').exec();
@@ -37,24 +37,23 @@ module.exports = {
             })
         }
     },
-    getPostById: async (req,res)=>{
+    getPostById: async (req, res)=>{
         try {
             const postId = req.params.id;
-   
             const post = await PostModel.findOneAndUpdate(
-            {
-                _id: postId,
-            },
-            {
-                $inc: {viewsCount: 1 },
-            },
-            {
-                returnDocument: 'after',
-            }
-        ).populate('author')
-
-        res.json(post)
-
+                    {
+                        _id: postId,
+                    },
+                    {
+                        $inc: {viewsCount: 1 },
+                    },
+                    {
+                        returnDocument: 'after',
+                    }
+                ).populate('author')
+        
+                return res.json(post)
+   
         } catch (error) {
             console.log(error);
             res.status(500).json({
@@ -62,6 +61,15 @@ module.exports = {
             })
         }
     },
+    getPopularPosts: async (req, res)=>{
+        try {
+            const popularPosts = await PostModel.find().sort({"viewsCount":-1})
+                return res.json(popularPosts)
+        } catch (error) {
+            res.status(500).json({"error":"error.message"})
+        }
+    },
+    
     remove: async (req,res)=>{
         try {
             const postId = req.params.id;

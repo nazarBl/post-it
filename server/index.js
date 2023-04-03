@@ -35,7 +35,7 @@ app.use('/uploads', express.static('uploads'))
 app.get('/',(req,res)=>{
     res.send('Home page')
 })
-
+app.get('/popular', PostController.getPopularPosts)
 app.post('/auth/registration', registerValidation, handleValidationErrors, UserController.register)
 app.post('/auth/login', loginValidation, handleValidationErrors, UserController.login)
 app.get('/auth/me', checkAuth, UserController.getMe)
@@ -49,6 +49,7 @@ app.post('/upload', checkAuth, upload.single('image'), (req,res)=>{
 app.get ('/tags', TagsController.getActualTags);
 
 app.get('/posts', PostController.getAllPosts);
+
 app.get('/posts/:id', PostController.getPostById);
 app.post('/posts', checkAuth, newPostValidation, handleValidationErrors, PostController.create); 
 app.delete('/posts/:id', checkAuth, PostController.remove); 
