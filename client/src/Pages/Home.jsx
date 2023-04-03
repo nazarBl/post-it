@@ -15,20 +15,21 @@ export const Home = () => {
 
   const isPostsLoading = posts.status === 'loading';
   const isTagsLoading = tags.status === 'loading';
+  const pathname = window.location.pathname
 
   React.useEffect(()=>{
-   if (window.location.pathname==='/popular'){
-    dispatch(fetchPopularPosts())
-   } else{
-    dispatch(fetchPosts())
-   }   
-   dispatch(fetchTags())
-  },[dispatch, window.location.pathname])
-  const pathname = window.location.pathname
+    if(pathname==='/popular'){
+      dispatch(fetchPopularPosts())
+    } else {
+      dispatch(fetchPosts()) 
+    }
+      dispatch(fetchTags())
+  },[dispatch, pathname])
+
   return (
     <>
   
-        <Tabs style={{ marginBottom: 15 }} value={pathname} aria-label="basic tabs example">
+        <Tabs style={{ marginBottom: 15 }} value={pathname} aria-label="basic tabs example" >
             <Tab
               label="New"
               component = {Link}
