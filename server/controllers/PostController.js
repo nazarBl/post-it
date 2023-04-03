@@ -41,18 +41,18 @@ module.exports = {
         try {
             const postId = req.params.id;
             const post = await PostModel.findOneAndUpdate(
-                    {
-                        _id: postId,
-                    },
-                    {
-                        $inc: {viewsCount: 1 },
-                    },
-                    {
-                        returnDocument: 'after',
-                    }
-                ).populate('author')
-        
-                return res.json(post)
+                {
+                    _id: postId,
+                },
+                {
+                    $inc: {viewsCount: 1 },
+                },
+                {
+                    returnDocument: 'after',
+                }
+            ).populate('author')
+    
+            return res.json(post)
    
         } catch (error) {
             console.log(error);

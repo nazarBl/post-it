@@ -21,7 +21,7 @@ export const FullPost = () => {
       alert('Error while getting post') 
     })
   },[id])
-
+  
   if (isLoading) {
     return <Post isLoading={isLoading} isFullPost/>
   }
@@ -29,26 +29,27 @@ export const FullPost = () => {
   return (
     <>  
         <Post
-        _id={post.id}
-        title={post.title}
-        imageUrl={`http://localhost:7000${post.imageUrl}`}
-        author={post.author}
-        createdAt={post.createdAt}
-        viewsCount={post.viewsCount}
-        commentsCount={post.commentsCount}
-        tags={post.tags}
-        >
-        <ReactMarkdown children={post.text}/>
+          _id={post.id}
+          title={post.title}
+          imageUrl={post.imageUrl ? `http://localhost:7000${post.imageUrl}`:''}
+          author={post.author}
+          createdAt={post.createdAt}
+          viewsCount={post.viewsCount}
+          commentsCount={post.commentsCount}
+          tags={post.tags}
+          >
+          <ReactMarkdown children={post.text}/>
         </Post>
         
-            <CommentsBlock items={[
+        <CommentsBlock 
+          items={[
             {
               user: {
                 fullName: "Lynn Karter",
                 avatarUrl: "https://mui.com/static/images/avatar/1.jpg",
               },
               text: "WOOOOW!",
-            },
+            },  
             {
               user: {
                 fullName: "Roberto Pagani",
@@ -60,6 +61,7 @@ export const FullPost = () => {
         >
         <Index />
         </CommentsBlock>
+        
     </>
   )
 }

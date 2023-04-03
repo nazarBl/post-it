@@ -72,7 +72,7 @@ export const Home = () => {
                   isLoading ={isTagsLoading}
                 />
                 <CommentsBlock 
-                  items={[
+                  items={[ // HARDCODED DATA!!!
                     {
                       user: {
                         fullName: "John Torm",

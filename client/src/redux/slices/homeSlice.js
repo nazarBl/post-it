@@ -72,7 +72,7 @@ const homeSlice = createSlice({
             state.tags.status='loading';
             state.tags.items=[];
         },
-        [fetchTags.fulfilled]:(state, action)=>{
+        [fetchTags.fulfilled]:(state, action)=>{ //need filter same tags names
             state.tags.status='loaded';
             state.tags.items =action.payload;
         },

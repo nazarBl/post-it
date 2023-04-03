@@ -32,9 +32,7 @@ app.use(express.json());
 app.use(cors())
 app.use('/uploads', express.static('uploads'))
 
-app.get('/',(req,res)=>{
-    res.send('Home page')
-})
+app.get('/',(req,res)=>res.send('Home page'))
 app.get('/popular', PostController.getPopularPosts)
 app.post('/auth/registration', registerValidation, handleValidationErrors, UserController.register)
 app.post('/auth/login', loginValidation, handleValidationErrors, UserController.login)
