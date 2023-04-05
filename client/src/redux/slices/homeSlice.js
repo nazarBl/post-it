@@ -12,6 +12,10 @@ export const fetchTags = createAsyncThunk('home/fetchTags', async ()=>{
     const {data} = await axios.get('/tags')
     return data;
 })
+export const fetchPostsByTagFilter = createAsyncThunk('home/fetchPostsByTagFilter', async (tagName)=>{
+    const {data} = await axios.get(`/tags/${tagName}`)
+    return data
+})
 
 export const fetchPopularPosts = createAsyncThunk('home/fetchPopularPosts', async()=>{
     const {data} = await axios.get('/popular')
@@ -67,6 +71,21 @@ const homeSlice = createSlice({
             state.posts.items=[];
         },
 
+        //Gettin posts by tag filter
+        [fetchPostsByTagFilter.pending]:(state)=>{
+            state.posts.status='loading';
+            state.posts.items=[];
+        },
+        [fetchPostsByTagFilter.fulfilled]:(state,action)=>{
+            state.posts.status='loaded';
+            console.log(action);
+            state.posts.items=action.payload;
+        },
+        [fetchPostsByTagFilter.reject]:(state)=>{
+            state.posts.status='error';
+            state.posts.items=[]
+        },
+
         //Getting tags
         [fetchTags.pending]:(state)=>{
             state.tags.status='loading';
@@ -74,6 +93,7 @@ const homeSlice = createSlice({
         },
         [fetchTags.fulfilled]:(state, action)=>{ //need filter same tags names
             state.tags.status='loaded';
+            
             state.tags.items =action.payload;
         },
         [fetchTags.rejected]:(state)=>{

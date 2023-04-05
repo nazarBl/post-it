@@ -63,11 +63,22 @@ module.exports = {
     },
     getPopularPosts: async (req, res)=>{
         try {
-            const popularPosts = await PostModel.find().sort({"viewsCount":-1})
+            const popularPosts = await PostModel.find().sort({"viewsCount":-1}).populate('author').exec()
                 return res.json(popularPosts)
         } catch (error) {
             res.status(500).json({"error":"error.message"})
         }
+    },
+
+    getPostsByTag: async (req, res)=>{
+       try {
+        const tagFilter = req.params.tagName
+       const filteredPosts = await PostModel.find({tags:tagFilter})
+     
+       res.status(200).json(filteredPosts)
+       } catch (error) {
+        res.status(500).json({message:error.message})
+       }
     },
     
     remove: async (req,res)=>{
