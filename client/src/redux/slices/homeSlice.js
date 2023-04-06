@@ -78,7 +78,6 @@ const homeSlice = createSlice({
         },
         [fetchPostsByTagFilter.fulfilled]:(state,action)=>{
             state.posts.status='loaded';
-            console.log(action.payload);
             state.posts.items=action.payload;
         },
         [fetchPostsByTagFilter.reject]:(state)=>{

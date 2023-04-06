@@ -12,10 +12,12 @@ import { useParams } from 'react-router-dom';
 export const Home = () => {
   const dispatch = useDispatch();
   const {posts, tags} =useSelector(state=>state.home)
-  console.log(posts);
   const {userData} = useSelector(state=>state.auth)
   let {tagName} = useParams();
-  tagName = tagName.replace(' ','%20')
+  if (tagName){
+    tagName = tagName.replace(' ','%20')
+  }
+  
     
   const isPostsLoading = posts.status === 'loading';
   const isTagsLoading = tags.status === 'loading';
@@ -30,7 +32,6 @@ export const Home = () => {
         dispatch(fetchPosts()) 
         break;
       case `/tags/${tagName}`:
-        console.log(`/tags/${tagName}`)
         dispatch(fetchPostsByTagFilter(tagName)) 
         break;
     
