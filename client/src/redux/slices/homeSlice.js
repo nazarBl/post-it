@@ -3,7 +3,6 @@ import axios from '../../axios.js'
 
 
 export const fetchPosts = createAsyncThunk('home/fetchPosts', async ()=>{
-    
     const {data} = await axios.get('/posts')
     return data;
 })
@@ -12,6 +11,7 @@ export const fetchTags = createAsyncThunk('home/fetchTags', async ()=>{
     const {data} = await axios.get('/tags')
     return data;
 })
+
 export const fetchPostsByTagFilter = createAsyncThunk('home/fetchPostsByTagFilter', async (tagName)=>{
     const {data} = await axios.get(`/tags/${tagName}`)
     return data
@@ -78,7 +78,7 @@ const homeSlice = createSlice({
         },
         [fetchPostsByTagFilter.fulfilled]:(state,action)=>{
             state.posts.status='loaded';
-            console.log(action);
+            console.log(action.payload);
             state.posts.items=action.payload;
         },
         [fetchPostsByTagFilter.reject]:(state)=>{

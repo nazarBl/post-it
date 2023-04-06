@@ -73,7 +73,8 @@ module.exports = {
     getPostsByTag: async (req, res)=>{
        try {
         const tagFilter = req.params.tagName
-       const filteredPosts = await PostModel.find({tags:tagFilter})
+       
+        const filteredPosts = await PostModel.find({tags:tagFilter})
      
        res.status(200).json(filteredPosts)
        } catch (error) {

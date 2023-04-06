@@ -11,8 +11,7 @@ module.exports = {
                 if(!actualTags.includes(tag)){
                     actualTags.push(tag);
                 }
-            }
-            
+            }        
             res.json(actualTags.slice(0,5))
             
         } catch (error) {

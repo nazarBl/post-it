@@ -12,12 +12,15 @@ import { useParams } from 'react-router-dom';
 export const Home = () => {
   const dispatch = useDispatch();
   const {posts, tags} =useSelector(state=>state.home)
+  console.log(posts);
   const {userData} = useSelector(state=>state.auth)
-  const {tagName} = useParams();
+  let {tagName} = useParams();
+  tagName = tagName.replace(' ','%20')
+    
   const isPostsLoading = posts.status === 'loading';
   const isTagsLoading = tags.status === 'loading';
-  const pathname = window.location.pathname
-
+  const pathname = window.location.pathname;
+  
   React.useEffect(()=>{
     switch (pathname) {
       case '/popular':
@@ -27,6 +30,7 @@ export const Home = () => {
         dispatch(fetchPosts()) 
         break;
       case `/tags/${tagName}`:
+        console.log(`/tags/${tagName}`)
         dispatch(fetchPostsByTagFilter(tagName)) 
         break;
     
