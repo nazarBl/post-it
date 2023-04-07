@@ -49,10 +49,10 @@ app.get('/posts/:tagName', PostController.getPostsByTag);
 
 app.get('/posts', PostController.getAllPosts);
 app.get('/popular', PostController.getPopularPosts)
-app.get('/posts/:id', PostController.getPostById);
-app.post('/posts', checkAuth, newPostValidation, handleValidationErrors, PostController.create); 
-app.delete('/posts/:id', checkAuth, PostController.remove); 
-app.patch('/posts/:id', checkAuth,newPostValidation, handleValidationErrors, PostController.update);
+app.get('/post/:id', PostController.getPostById);
+app.post('/post', checkAuth, newPostValidation, handleValidationErrors, PostController.create); 
+app.delete('/post/:id', checkAuth, PostController.remove); 
+app.patch('/post/:id', checkAuth,newPostValidation, handleValidationErrors, PostController.update);
 
 app.listen(PORT, (err)=>{
     

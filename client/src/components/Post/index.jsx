@@ -27,7 +27,6 @@ export const Post = ({_id, title, text, imageUrl, author, createdAt, tags, views
     }
     
   }
-  console.log(tags);
   return (
     <div className={clsx(style.root, { [style.rootFull]: isFullPost })}>
       {isEditable && (
