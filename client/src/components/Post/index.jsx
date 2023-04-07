@@ -15,7 +15,6 @@ import { useDispatch } from 'react-redux';
 import { fetchRemovePost } from '../../redux/slices/homeSlice';
 
 export const Post = ({_id, title, text, imageUrl, author, createdAt, tags, viewsCount, commentsCount, children, isFullPost, isLoading, isEditable}) => {
-
   const dispatch = useDispatch();
   if (isLoading) {
     return <PostSkeleton />;
@@ -56,7 +55,7 @@ export const Post = ({_id, title, text, imageUrl, author, createdAt, tags, views
               <ul className={style.tags}>
                   {tags.map((name)=>(
                    
-                      <li key={name}> <Link to={`/tag/${name}`}>#{name}</Link></li>
+                      <li key={name}> <Link to={`/posts/${name}`}>#{name}</Link></li>
                   ))}
               </ul>
               {children && <div className={style.content}>{children}</div>}

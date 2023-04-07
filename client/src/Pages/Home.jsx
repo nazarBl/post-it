@@ -12,6 +12,7 @@ import { useParams } from 'react-router-dom';
 export const Home = () => {
   const dispatch = useDispatch();
   const {posts, tags} =useSelector(state=>state.home)
+  
   const {userData} = useSelector(state=>state.auth)
   let {tagName} = useParams();
   if (tagName){
@@ -31,7 +32,7 @@ export const Home = () => {
       case '/':
         dispatch(fetchPosts()) 
         break;
-      case `/tags/${tagName}`:
+      case `/posts/${tagName}`:
         dispatch(fetchPostsByTagFilter(tagName)) 
         break;
     
@@ -40,7 +41,7 @@ export const Home = () => {
     }
       dispatch(fetchTags())
   },[dispatch, pathname, tagName])
-
+ 
       return (
       <>
       <TabsMenu/>

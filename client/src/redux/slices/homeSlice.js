@@ -13,7 +13,7 @@ export const fetchTags = createAsyncThunk('home/fetchTags', async ()=>{
 })
 
 export const fetchPostsByTagFilter = createAsyncThunk('home/fetchPostsByTagFilter', async (tagName)=>{
-    const {data} = await axios.get(`/tags/${tagName}`)
+    const {data} = await axios.get(`/posts/${tagName}`)
     return data
 })
 
@@ -90,7 +90,7 @@ const homeSlice = createSlice({
             state.tags.status='loading';
             state.tags.items=[];
         },
-        [fetchTags.fulfilled]:(state, action)=>{ //need filter same tags names
+        [fetchTags.fulfilled]:(state, action)=>{
             state.tags.status='loaded';
             
             state.tags.items =action.payload;
