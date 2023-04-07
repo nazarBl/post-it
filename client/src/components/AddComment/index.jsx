@@ -14,13 +14,13 @@ export const Index = () => {
         />
         <div className={style.form}>
           <TextField
-            label="Написать комментарий"
+            label="Leave a comment..."
             variant="outlined"
             maxRows={10}
             multiline
             fullWidth
           />
-          <Button variant="contained">Отправить</Button>
+          <Button variant="contained">Send</Button>
         </div>
       </div>
     </>
