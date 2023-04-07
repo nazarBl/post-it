@@ -27,7 +27,7 @@ module.exports = {
     getAllPosts: async (req, res)=>{
         try {
 
-        const posts = await PostModel.find().populate('author').exec();
+        const posts = await PostModel.find().sort({createdAt:-1}).populate('author').exec();
         res.json(posts)
 
         } catch (error) {

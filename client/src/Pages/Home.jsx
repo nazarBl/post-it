@@ -15,6 +15,7 @@ export const Home = () => {
   
   const {userData} = useSelector(state=>state.auth)
   let {tagName} = useParams();
+  console.log(tagName);
   if (tagName){
     tagName = tagName.replace(' ','%20')
   }

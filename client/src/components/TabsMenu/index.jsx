@@ -1,11 +1,17 @@
 import { Tab, Tabs } from '@mui/material';
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 const TabsMenu = () => {
     const pathname = window.location.pathname;
-    const tagName = pathname.split('/').at(-1).split('%20').join('')
-    if(pathname===('/'||'/popular')){
+    const params = useParams();
+    
+    let tagName;
+    if(params.tagName){
+        tagName = params.tagName.split('/').at(-1).split('%20').join('')
+    } 
+    
+    if(!params.tagName){
         return (
             <>
             <Tabs style={{ marginBottom: 15 }} value={pathname} aria-label="basic tabs example" >
