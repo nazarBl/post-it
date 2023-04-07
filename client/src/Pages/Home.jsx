@@ -38,16 +38,12 @@ export const Home = () => {
   if (tagName){
     tagName = tagName.replace(' ','%20')
   }
-  
     
   const isPostsLoading = posts.status === 'loading';
   const isTagsLoading = tags.status === 'loading';
-
   
-  
- 
-      return (
-      <>
+  return (
+    <>
       <TabsMenu/>
       <Grid container spacing={4}>
         <Grid xs={8} item>
@@ -96,7 +92,7 @@ export const Home = () => {
         />
         </Grid> 
       </Grid>
-  </>
-    )
+    </>
+  )
   
 }

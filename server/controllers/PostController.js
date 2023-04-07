@@ -74,7 +74,7 @@ module.exports = {
        try {
         const tagFilter = req.params.tagName
        
-        const filteredPosts = await PostModel.find({tags:tagFilter})
+        const filteredPosts = await PostModel.find({tags:tagFilter}).populate('author').exec()
      
        res.status(200).json(filteredPosts)
        } catch (error) {
