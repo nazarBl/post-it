@@ -16,6 +16,7 @@ import { fetchRemovePost } from '../../redux/slices/homeSlice';
 
 export const Post = ({_id, title, text, imageUrl, author, createdAt, tags, viewsCount, commentsCount, children, isFullPost, isLoading, isEditable}) => {
   const dispatch = useDispatch();
+ 
   if (isLoading) {
     return <PostSkeleton />;
   }
@@ -26,12 +27,12 @@ export const Post = ({_id, title, text, imageUrl, author, createdAt, tags, views
     }
     
   }
-
+  console.log(tags);
   return (
     <div className={clsx(style.root, { [style.rootFull]: isFullPost })}>
       {isEditable && (
-        <div className={style.editButtons}>
-          <Link to={`/posts/${_id}/edit`}>
+        <div className={style.editButtons}> 
+          <Link to={`/post/${_id}/edit`}>
             <IconButton color="primary">
               <EditIcon />
             </IconButton>
@@ -50,13 +51,13 @@ export const Post = ({_id, title, text, imageUrl, author, createdAt, tags, views
           <UserInfo {...author} extraInfo={createdAt} />
           <div className={style.indention}> 
               <h2 className={clsx(style.title, { [style.titleFull]: isFullPost })}>
-                {isFullPost ? title : <Link to={`/posts/${_id}`}>{title}</Link>}
+                {isFullPost ? title : <Link to={`/post/${_id}`}>{title}</Link>}
               </h2>
               <ul className={style.tags}>
-                  {tags.map((name)=>(
+                  {tags?tags.map((name)=>(
                    
                       <li key={name}> <Link to={`/posts/${name}`}>#{name}</Link></li>
-                  ))}
+                  )):''}
               </ul>
               {children && <div className={style.content}>{children}</div>}
               <ul className ={style.postDetails}>

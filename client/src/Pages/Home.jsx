@@ -11,18 +11,7 @@ import { useParams } from 'react-router-dom';
 
 export const Home = () => {
   const dispatch = useDispatch();
-  const {posts, tags} =useSelector(state=>state.home)
-  
-  const {userData} = useSelector(state=>state.auth)
   let {tagName} = useParams();
-  console.log(tagName);
-  if (tagName){
-    tagName = tagName.replace(' ','%20')
-  }
-  
-    
-  const isPostsLoading = posts.status === 'loading';
-  const isTagsLoading = tags.status === 'loading';
   const pathname = window.location.pathname;
   
   React.useEffect(()=>{
@@ -42,6 +31,20 @@ export const Home = () => {
     }
       dispatch(fetchTags())
   },[dispatch, pathname, tagName])
+
+  const {posts, tags} =useSelector(state=>state.home)
+  const {userData} = useSelector(state=>state.auth)
+  
+  if (tagName){
+    tagName = tagName.replace(' ','%20')
+  }
+  
+    
+  const isPostsLoading = posts.status === 'loading';
+  const isTagsLoading = tags.status === 'loading';
+
+  
+  
  
       return (
       <>

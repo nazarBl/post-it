@@ -22,9 +22,9 @@ function App() {
           <Route path="/" element = {<Home/>}/>
           <Route path="/popular" element = {<Home/>}/>
           <Route path="/posts/:tagName" element = {<Home/>}/>
-          <Route path="/posts/:id" element = {<FullPost/>}/>
-          <Route path="/posts/:id/edit" element = {<AddPost/>}/>
-          <Route path="/posts/create" element={<AddPost/>} />
+          <Route path="/post/:id" element = {<FullPost/>}/>
+          <Route path="/post/:id/edit" element = {<AddPost/>}/>
+          <Route path="/post/create" element={<AddPost/>} />
           <Route path="/auth/login" element={<Login/>} />
           <Route path="/auth/registration" element={<Registration/>} />
         </Routes>

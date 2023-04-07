@@ -23,7 +23,7 @@ export const fetchPopularPosts = createAsyncThunk('home/fetchPopularPosts', asyn
 })
 
 export const fetchRemovePost = createAsyncThunk('home/fetchRemovePost', async(id)=> 
-axios.delete(`/posts/${id}`))
+axios.delete(`/post/${id}`))
 
 const initialState = {
     posts:{

@@ -13,7 +13,7 @@ export const FullPost = () => {
 
   const {id} = useParams();
   React.useEffect(()=>{
-    axios.get(`/posts/${id}`).then(res=>{
+    axios.get(`/post/${id}`).then(res=>{
       setPost(res.data);
       setIsLoading(false)
     }).catch((err)=>{
