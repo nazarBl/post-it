@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { fetchRemovePost } from '../../redux/slices/homeSlice';
 
-export const Post = ({_id, title, text, imageUrl, author, createdAt, tags, viewsCount, commentsCount, children, isFullPost, isLoading, isEditable}) => {
+export const Post = ({_id, title, text, imageUrl, dateOfCreate, author, createdAt, tags, viewsCount, commentsCount, children, isFullPost, isLoading, isEditable}) => {
   const dispatch = useDispatch();
  
   if (isLoading) {
@@ -47,7 +47,7 @@ export const Post = ({_id, title, text, imageUrl, author, createdAt, tags, views
         />)}
         
         <div className={style.wrapper}>
-          <UserInfo {...author} extraInfo={createdAt} />
+          <UserInfo {...author} extraInfo={dateOfCreate} />
           <div className={style.indention}> 
               <h2 className={clsx(style.title, { [style.titleFull]: isFullPost })}>
                 {isFullPost ? title : <Link to={`/post/${_id}`}>{title}</Link>}

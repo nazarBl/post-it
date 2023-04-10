@@ -1,15 +1,25 @@
 const PostModel = require('../models/Post')
 
-const dataConverter = (posts)=>{
-    for(post of posts){
-        let month =post.createdAt.toString().split(' ')[1]
-        let year = post.createdAt.toString().split(' ')[3]
-        let dayOfTheMonth = post.createdAt.toString().split(' ')[2]
-        let time =post.createdAt.toString().split(' ')[4].split(':').slice(0,2).join(':');
-        post.dateOfCreate =[dayOfTheMonth, month, year, time].join(' ');
+const dataConverter = (data)=>{
+    if (data.length){
+        for(post of data){
+            let month =post.createdAt.toString().split(' ')[1]
+            let year = post.createdAt.toString().split(' ')[3]
+            let dayOfTheMonth = post.createdAt.toString().split(' ')[2]
+            let time =post.createdAt.toString().split(' ')[4].split(':').slice(0,2).join(':');
+            post.dateOfCreate =[dayOfTheMonth, month, year, time].join(' ');
+        }
+    } else {
+        let month =data.createdAt.toString().split(' ')[1]
+        let year = data.createdAt.toString().split(' ')[3]
+        let dayOfTheMonth = data.createdAt.toString().split(' ')[2]
+        let time =data.createdAt.toString().split(' ')[4].split(':').slice(0,2).join(':');
+        data.dateOfCreate =[dayOfTheMonth, month, year, time].join(' ');
     }
-    return posts
+   
+    return data
 }
+
 module.exports = {
     create: async (req, res)=>{
         try {
@@ -62,6 +72,7 @@ module.exports = {
                     returnDocument: 'after',
                 }
             ).populate('author')
+            dataConverter(post)
     
             return res.json(post)
    

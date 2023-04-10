@@ -24,6 +24,7 @@ const PostSchem = new mongoose.Schema({
             default: 0,
         },
         imageUrl:String,
+        dateOfCreate:String,
 },{
     timestamps:true
 })

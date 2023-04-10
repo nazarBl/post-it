@@ -21,7 +21,7 @@ export const FullPost = () => {
       alert('Error while getting post') 
     })
   },[id])
-  
+  console.log(post);
   if (isLoading) {
     return <Post isLoading={isLoading} isFullPost/>
   }
@@ -33,6 +33,7 @@ export const FullPost = () => {
           title={post.title}
           imageUrl={post.imageUrl ? `http://localhost:7000${post.imageUrl}`:''}
           author={post.author}
+          dateOfCreate={post.dateOfCreate}
           createdAt={post.createdAt}
           viewsCount={post.viewsCount}
           commentsCount={post.commentsCount}
