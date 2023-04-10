@@ -5,7 +5,7 @@ import { Route, Routes } from 'react-router-dom';
 import { Header }  from './components';
 import { useDispatch } from 'react-redux';
 
-import { Home, FullPost, Registration, AddPost, Login } from "./Pages";
+import { Home, FullPost, Registration, AddPost, Login, Profile } from "./Pages";
 import { fetchAuthMe } from './redux/slices/auth';
 
 function App() {
@@ -27,6 +27,7 @@ function App() {
           <Route path="/post/create" element={<AddPost/>} />
           <Route path="/auth/login" element={<Login/>} />
           <Route path="/auth/registration" element={<Registration/>} />
+          <Route path="/auth/me" element={<Profile/>} />
         </Routes>
         
       </Container>

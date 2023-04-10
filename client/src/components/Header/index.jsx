@@ -16,7 +16,8 @@ export const Header = () => {
         }
         
     };
-
+   const avatarUrl =null;
+    
     return (
     <div className={style.wrapper}>
         <Container maxWidth='lg'>
@@ -24,9 +25,13 @@ export const Header = () => {
                 <Link to="/">
                     <div className={style.logo}>POST IT</div>
                 </Link>
-                <div className={style.authBtns}>
+
+                <div className={style.authBlock}>
                     {isLoginned?
                         <>
+                            <Link to="/auth/me">
+                                <img className={style.userAvatar} src={avatarUrl? avatarUrl : '/noavatar.png'} alt='userAvatar' />
+                            </Link>
                             <Link to="/posts/create">
                                 <Button variant = "contained">New Post</Button>
                             </Link>

@@ -7,9 +7,11 @@
 
 .inner {
     display: flex;
+    height: max-content;
     justify-content: space-between;
+   
     a {
-        text-decoration: none;
+        text-decoration: none;  
         color:white;
     }
 }
@@ -29,10 +31,19 @@
     
     &:hover {
     background-color: #4361ee;
-            }
+    }
 }
     
-.authBtns {
+.authBlock {
+    display: flex;
+    align-items: center;
+    .userAvatar {
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
+        background-color: black;
+
+      }
     button {
     margin-left: 10px;
     }
