@@ -1,5 +1,15 @@
 const PostModel = require('../models/Post')
 
+const dataConverter = (posts)=>{
+    for(post of posts){
+        let month =post.createdAt.toString().split(' ')[1]
+        let year = post.createdAt.toString().split(' ')[3]
+        let dayOfTheMonth = post.createdAt.toString().split(' ')[2]
+        let time =post.createdAt.toString().split(' ')[4].split(':').slice(0,2).join(':');
+        post.dateOfCreate =[dayOfTheMonth, month, year, time].join(' ');
+    }
+    return posts
+}
 module.exports = {
     create: async (req, res)=>{
         try {
@@ -28,6 +38,7 @@ module.exports = {
         try {
 
         const posts = await PostModel.find().sort({createdAt:-1}).populate('author').exec();
+        dataConverter(posts);
         res.json(posts)
 
         } catch (error) {
@@ -64,7 +75,8 @@ module.exports = {
     getPopularPosts: async (req, res)=>{
         try {
             const popularPosts = await PostModel.find().sort({"viewsCount":-1}).populate('author').exec()
-                return res.json(popularPosts)
+            dataConverter(popularPosts)    
+            return res.json(popularPosts)
         } catch (error) {
             res.status(500).json({"error":"error.message"})
         }
@@ -75,7 +87,7 @@ module.exports = {
         const tagFilter = req.params.tagName
        
         const filteredPosts = await PostModel.find({tags:tagFilter}).populate('author').exec()
-     
+        dataConverter(filteredPosts);
        res.status(200).json(filteredPosts)
        } catch (error) {
         res.status(500).json({message:error.message})

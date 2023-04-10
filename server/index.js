@@ -1,7 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const multer = require('multer')
-const cors = require('cors')
+const multer = require('multer') // multer is used to work with uploading images
+const cors = require('cors') // cors make possible to run server and client on same device
 
 const {registerValidation, loginValidation, newPostValidation} = require('./validations')
 const {checkAuth, handleValidationErrors} = require('./utils/index.js')
@@ -17,7 +17,7 @@ mongoose.connect('mongodb+srv://Admin:123123123@cluster0.afio7fk.mongodb.net/?re
 
 const app = express();
 
-const imgStorage = multer.diskStorage({ //multer lib to work with images uploading
+const imgStorage = multer.diskStorage({
     destination: (_, __, cb)=>{
         cb(null,'uploads')
     },
