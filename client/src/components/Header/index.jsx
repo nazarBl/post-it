@@ -29,13 +29,15 @@ export const Header = () => {
                 <div className={style.authBlock}>
                     {isLoginned?
                         <>
-                            <Link to="/auth/me">
+                            <Link to="/auth/me" className={style.avatarLink}>
                                 <img className={style.userAvatar} src={avatarUrl? avatarUrl : '/noavatar.png'} alt='userAvatar' />
                             </Link>
                             <Link to="/posts/create">
                                 <Button variant = "contained">New Post</Button>
                             </Link>
-                            <Button onClick={onClickLogOut} variant="contained" color="error">Log Out</Button>
+                            <Link to="/">
+                                <Button onClick={onClickLogOut} variant="contained" color="error">Log Out</Button>
+                            </Link>
                         </>:
                         <>
                             <Link to="auth/login">

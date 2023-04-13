@@ -7,4 +7,4 @@ useForm.handleSubmit - "handleSubmit" is used to check if registered fields pass
 
 useForm.register('email', {required: 'Enter your email please'}) -"register" method create new input with name "email". 
 
-required means this field must be filled, if not - client will get message "Enter your email please"
+"required" means this field must be filled, if not - client will get message "Enter your email please"

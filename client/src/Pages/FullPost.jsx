@@ -21,7 +21,6 @@ export const FullPost = () => {
       alert('Error while getting post') 
     })
   },[id])
-  console.log(post);
   if (isLoading) {
     return <Post isLoading={isLoading} isFullPost/>
   }

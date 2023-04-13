@@ -3,6 +3,12 @@ const bcrypt =require('bcrypt')
 
 const {validationResult} = require('express-validator')
 const UserModel = require('../models/User')
+
+const dataConverter = (data)=>{
+    data.regTime = data.createdAt.toString().split(' ').slice(1,4). join(' ')
+    return data;
+}
+
 const UserController = {
     register : async (req,res)=>{
         try {
@@ -86,7 +92,7 @@ const UserController = {
     getMe : async (req,res)=>{
         try {
             const user = await UserModel.findById(req.userId)
-          
+            dataConverter(user);
     
             if(!user){
                 return res.status(404).json({
@@ -94,7 +100,7 @@ const UserController = {
                 })
             }
             const {password, ...userData} = user._doc
-    
+
         res.json(userData);
         } catch (error) {}
     }
