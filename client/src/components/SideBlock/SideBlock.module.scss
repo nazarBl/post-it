@@ -1,7 +1,17 @@
 .root {
     margin-bottom: 20px;
+
+    .title {
+      padding: 15px 15px 0 15px;
+    }
+
+    .tagsHeader {
+      display: grid;
+      grid-template-columns: auto auto;
+      grid-template-rows: 1fr;
+
+      padding: 0.5rem;
+    }
   }
   
-  .title {
-    padding: 15px 15px 0 15px;
-  }
+  
