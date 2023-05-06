@@ -10,7 +10,7 @@
 
         height: 60vh;
         padding: 20px;
-        
+       
         h2{
             color: white;
             align-self: center;
@@ -28,7 +28,9 @@
 
         .infoForm {
             align-self: start;
-            
+            display:grid;
+            gap:1vh;
+
             h3 {
                 padding: 0;
                 margin: 0;
@@ -38,18 +40,29 @@
 
         .userInfo {
             align-self: start;
+            display:grid;
+            gap:1vh;
+
             h3 {
                 padding: 0;
                 margin: 0;
                 color: rgba(0, 0, 0, 0.7);
             }
+            
+            input {
+                padding: 0 0 0 0.6vw;
+                font-size: 1.17em;
+            }
         }
 
-        Button {
+        .buttonBlock {
             grid-column: 3;
-            width: 8vw;
             justify-self: end;
-            margin-right: 2rem;
+            
+            Button {
+                width: 8vw;
+                margin-right: 2rem;
+            }
         }
     }
 }

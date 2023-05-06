@@ -52,7 +52,7 @@ export const AddPost = () => {
       }
 
       const {data} = isEditing?
-      await axios.patch(`/post/${id}`, params):
+      await axios.patch(`/post/${id}`, params): // update post after editing
       await axios.post('/post', params)
 
       const _id = isEditing? id : data._id;

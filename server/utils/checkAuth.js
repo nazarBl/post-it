@@ -5,8 +5,8 @@ module.exports = (req,res,next)=>{
 
     if(token){
         try {
-            const decoded = jwt.verify(token,'secretKiey')
-            req.userId = decoded._id;
+            const decoded = jwt.verify(token,'secretKiey') //
+            req.userId = decoded._id; // get id from parsed-to-data token
             next()
         } catch (error) {
             return res.status(403).json({

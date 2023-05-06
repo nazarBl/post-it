@@ -28,6 +28,7 @@ function App() {
           <Route path="/auth/login" element={<Login/>} />
           <Route path="/auth/registration" element={<Registration/>} />
           <Route path="/auth/me" element={<Profile/>} />
+          <Route path="/auth/me/edit" element={<Profile/>} />
         </Routes>
         
       </Container>

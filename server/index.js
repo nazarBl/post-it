@@ -37,6 +37,7 @@ app.get('/',(req,res)=>res.send('Home page'))
 app.post('/auth/registration', registerValidation, handleValidationErrors, UserController.register)
 app.post('/auth/login', loginValidation, handleValidationErrors, UserController.login)
 app.get('/auth/me', checkAuth, UserController.getMe)
+app.patch('/auth/me', checkAuth, UserController.updateMe)
 
 app.post('/upload', checkAuth, upload.single('image'), (req,res)=>{
     res.json({

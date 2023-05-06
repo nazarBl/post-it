@@ -24,7 +24,7 @@ const UserController = {
             email:req.body.email,
             fullName:req.body.fullName,  
             password: passwordHash,
-            avatarUrl:req.body.avatarUrl,
+            avatarUrl:req.body.avatarUrl?req.body.avatarUrl:'',
         })
     
         const user = await doc.save()
@@ -76,7 +76,7 @@ const UserController = {
                 expiresIn:'30d',
             })
         
-            const {password, ...userData} = user._doc
+            const {password, ...userData} = user._doc // take out password for security reasons
         
             res.json({
                 ...userData,
@@ -102,7 +102,29 @@ const UserController = {
             const {password, ...userData} = user._doc
 
         res.json(userData);
-        } catch (error) {}
+        } catch (error) {
+            console.log("user not found");
+        }
+    },
+
+    updateMe: async (req,res)=>{
+        try {
+            const userId = req.userId;
+
+            const {fullName,email} = req.body;
+            console.log(req.body);
+           await UserModel.updateOne({
+                _id:userId,
+            },{
+                fullName,email
+           
+            })
+            return res.status(200).json({message:"User was updated successfully!"})
+        } catch (error) {
+            return res.status(404).json({
+                message:`User not found!`
+            })
+        }
     }
 }
 

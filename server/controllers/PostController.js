@@ -23,7 +23,6 @@ const dataConverter = (data)=>{
 module.exports = {
     create: async (req, res)=>{
         try {
-            console.log(req.body);
             const doc = new PostModel({
                 title:req.body.title,
                 text: req.body.text,
@@ -127,10 +126,10 @@ module.exports = {
     },
     update: async (req,res)=>{
         try {
-            const postId = req.params.id;
+            const _id = req.body.id;
 
             await PostModel.updateOne({
-                _id:postId,
+                _id,
             },
             {
                 title:req.body.title,
@@ -138,7 +137,7 @@ module.exports = {
                 imageUrl: req.body.imageUrl,
                 author: req.userId,
                 viewsCount: req.body.viewsCount,
-                tags: req.body.tags.split(','),
+                tags: req.body.tags.replace(' ','').split(','),
             })
 
             res.json({
