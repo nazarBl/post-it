@@ -3,34 +3,32 @@ import style from './Profile.module.scss'
 import React from 'react'
 import {Button, Paper, TextField} from '@mui/material'
 import {useDispatch, useSelector} from 'react-redux'
-import { fetchAuthMe } from '../../redux/slices/auth'
-import {Link} from 'react-router-dom'
-import axios from '../../axios.js'
+import { fetchAuthMe, fetchUpdateMe } from '../../redux/slices/auth'
 
 export const Profile = () => {
   const [fullName, setFullName] = React.useState('')
   const [email, setEmail] = React.useState('')
+  const [isEditing, setIsEditing] = React.useState(false)
   const dispatch = useDispatch();
-  let isEditing = false;
 
   React.useEffect(()=>{ // get info from backend and write to Redux
-    dispatch(fetchAuthMe()).then(res=>{
-      setFullName(res.fullName);
-      setEmail(res.email)
-    });
-  },[dispatch])
+    dispatch(fetchAuthMe());  
+  },[dispatch, isEditing])
   
   const userData = useSelector(state=>state.auth.userData); // get data from redux
   
- 
-  
-  if(window.location.pathname==='/auth/me/edit') {
-    isEditing = true;
+  const onEditClick = async ()=>{
+    await setFullName(userData.fullName);
+    await setEmail(userData.email);
+    setIsEditing(true);
+  }
+  const onSaveSubmit = async (fullName, email)=>{
+    const values = {fullName, email};
+    // axios.patch('/auth/me', values)
+    await dispatch(fetchUpdateMe(values))
+    setIsEditing(false)
   }
 
-  const updateUser = (fullName, email)=>{
-    axios.patch('/auth/me',{fullName, email})
-  }
 
   return (
     <div className={style.wrapper}>
@@ -56,13 +54,13 @@ export const Profile = () => {
             }
         </div>:''}
         {isEditing?
-          <Link className={style.buttonBlock} to = "/auth/me">
-            <Button variant="contained" onClick={()=>updateUser(fullName, email)}>Save</Button>
-          </Link>
+          <div>
+            <Button variant="contained" onClick={()=>onSaveSubmit(fullName, email)}>Save</Button>
+          </div>
              : 
-          <Link className = {style.buttonBlock} to = "/auth/me/edit">
-            <Button variant="contained" >Edit</Button>
-          </Link>
+          <div>
+            <Button variant="contained" onClick={()=> onEditClick()}>Edit</Button>
+          </div>
           }
       </Paper>
     </div>

@@ -32,7 +32,7 @@ export const Header = () => {
                             <Link to="/auth/me" className={style.avatarLink}>
                                 <img className={style.userAvatar} src={avatarUrl? avatarUrl : '/noavatar.png'} alt='userAvatar' />
                             </Link>
-                            <Link to="/posts/create">
+                            <Link to="/post/create">
                                 <Button variant = "contained">New Post</Button>
                             </Link>
                             <Link to="/">

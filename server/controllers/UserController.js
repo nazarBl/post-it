@@ -112,14 +112,13 @@ const UserController = {
             const userId = req.userId;
 
             const {fullName,email} = req.body;
-            console.log(req.body);
-           await UserModel.updateOne({
+            const updatedUser = await UserModel.updateOne({
                 _id:userId,
             },{
                 fullName,email
            
             })
-            return res.status(200).json({message:"User was updated successfully!"})
+            return res.status(200).json(updatedUser)
         } catch (error) {
             return res.status(404).json({
                 message:`User not found!`

@@ -50,8 +50,8 @@ app.get('/posts/:tagName', PostController.getPostsByTag);
 
 app.get('/posts', PostController.getAllPosts);
 app.get('/popular', PostController.getPopularPosts)
+app.post('/post/create', checkAuth, newPostValidation, handleValidationErrors, PostController.create); 
 app.get('/post/:id', PostController.getPostById);
-app.post('/post', checkAuth, newPostValidation, handleValidationErrors, PostController.create); 
 app.delete('/post/:id', checkAuth, PostController.remove); 
 app.patch('/post/:id', checkAuth,newPostValidation, handleValidationErrors, PostController.update);
 

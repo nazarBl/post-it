@@ -16,6 +16,11 @@ export const fetchAuthMe = createAsyncThunk('auth/getMe', async ()=>{
      return data;
 }) 
 
+export const fetchUpdateMe = createAsyncThunk('auth/fetchUpdateMe', async (values)=>{
+    const {data} = await axios.patch('/auth/me', values);
+    return data;
+})
+
 const initialState ={
     userData: null,
     status:'loading'
@@ -43,6 +48,7 @@ const authSlice =createSlice({
             state.userData = null;
         },
 
+
         [fetchAuthMe.pending]:(state)=>{
             state.status = 'loading';
             state.userData = null;
@@ -55,6 +61,8 @@ const authSlice =createSlice({
             state.status = 'error';
             state.userData = null
         },
+
+
         [fetchRegister.pending]:(state)=>{
             state.status = 'loading';
         },
@@ -64,6 +72,19 @@ const authSlice =createSlice({
         },
         [fetchRegister.rejected]:(state)=>{
             state.status = 'error'
+        },
+        
+
+        [fetchUpdateMe.pending]:(state)=>{
+            state.status ='loading';
+        },
+        [fetchUpdateMe.fulfilled]:(state,action)=>{
+            state.status = 'loaded';
+            state.userData.fullName = action.payload.fullName;
+            state.userData.email = action.payload.email;
+        },
+        [fetchUpdateMe.rejected]:(state)=>{
+            state.status = 'error';
         }
     }
 })
