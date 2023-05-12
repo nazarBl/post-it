@@ -54,11 +54,11 @@ export const Profile = () => {
             }
         </div>:''}
         {isEditing?
-          <div>
+          <div className={style.buttonBlock}>
             <Button variant="contained" onClick={()=>onSaveSubmit(fullName, email)}>Save</Button>
           </div>
              : 
-          <div>
+          <div className={style.buttonBlock}>
             <Button variant="contained" onClick={()=> onEditClick()}>Edit</Button>
           </div>
           }
