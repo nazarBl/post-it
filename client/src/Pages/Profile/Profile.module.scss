@@ -5,9 +5,8 @@
     .paper{
         display: grid;
         grid-template-columns: 1fr 1.5fr 4fr;
-        grid-template-rows: 1fr 5fr;
+        grid-template-rows: 1fr 1fr 5fr;
         column-gap: 1vw;
-
         height: 60vh;
         padding: 20px;
        
@@ -54,11 +53,21 @@
                 font-size: 1.17em;
             }
         }
-
+        .editAvatarBtn {
+            align-self: start;
+            justify-self: center;
+            margin-top: 0.6em;
+            Button {
+                font-size: 0.7em;
+                text-align: justify;
+                padding: 0.2em 0.65em;
+                color: gray;
+            }
+        }
         .buttonBlock {
             grid-column: 3;
             justify-self: end;
-            
+            grid-row:4;
             Button {
                 width: 8vw;
                 margin-right: 2rem;

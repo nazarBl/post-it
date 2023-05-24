@@ -25,8 +25,8 @@ export const AddPost = () => {
     try {
       const formData = new FormData();
       const file = event.target.files[0];
-      formData.append('image', file);
-      const {data} = await axios.post('/upload', formData)
+      formData.append('postImage', file);
+      const {data} = await axios.post('/upload/postImg', formData)
       setImageUrl(data.url);
     } catch (error) {
       console.warn(error);
@@ -52,7 +52,7 @@ export const AddPost = () => {
       }
 
       const {data} = isEditing?
-      await axios.patch(`/post/${id}`, params): // update post after editing
+      await axios.patch(`/post/${id}`, params) : // update post after editing
       await axios.post('/post/create', params)
 
       const _id = isEditing? id : data._id;

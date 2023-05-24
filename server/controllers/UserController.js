@@ -111,11 +111,11 @@ const UserController = {
         try {
             const userId = req.userId;
 
-            const {fullName,email} = req.body;
+            const {fullName,email, avatarUrl} = req.body;
             const updatedUser = await UserModel.updateOne({
                 _id:userId,
             },{
-                fullName,email
+                fullName,email, avatarUrl
            
             })
             return res.status(200).json(updatedUser)

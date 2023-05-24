@@ -17,16 +17,16 @@ mongoose.connect('mongodb+srv://Admin:123123123@cluster0.afio7fk.mongodb.net/?re
 
 const app = express();
 
-const imgStorage = multer.diskStorage({
-    destination: (_, __, cb)=>{
-        cb(null,'uploads')
+const postImgStorage = multer.diskStorage({
+    destination: (req, file, cb)=>{ // no request and no file provided
+        cb(null,'uploads/postImg') // null for possible error (not catched)
     },
-    filename: (_, file, cb)=>{
-        cb(null, file.originalname)
+    filename: (req, file, cb)=>{
+        cb(null, file.originalname) // null for possible error (not catched)
     }   
 })
 
-const upload = multer({storage:imgStorage})
+const upload = multer({storage:postImgStorage})
 
 app.use(express.json());
 app.use(cors())
@@ -39,9 +39,9 @@ app.post('/auth/login', loginValidation, handleValidationErrors, UserController.
 app.get('/auth/me', checkAuth, UserController.getMe)
 app.patch('/auth/me', checkAuth, UserController.updateMe)
 
-app.post('/upload', checkAuth, upload.single('image'), (req,res)=>{
+app.post('/upload/postImg', checkAuth, upload.single('postImage'), (req,res)=>{ // upload image
     res.json({
-        url:`/uploads/${req.file.originalname}`,
+        url:`/uploads/postImg/${req.file.originalname}`,
     })
 })  
 
@@ -53,7 +53,7 @@ app.get('/popular', PostController.getPopularPosts)
 app.post('/post/create', checkAuth, newPostValidation, handleValidationErrors, PostController.create); 
 app.get('/post/:id', PostController.getPostById);
 app.delete('/post/:id', checkAuth, PostController.remove); 
-app.patch('/post/:id', checkAuth,newPostValidation, handleValidationErrors, PostController.update);
+app.patch('/post/:id', checkAuth, newPostValidation, handleValidationErrors, PostController.update);
 
 app.listen(PORT, (err)=>{
     

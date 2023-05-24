@@ -8,6 +8,7 @@ import { fetchAuthMe, fetchUpdateMe } from '../../redux/slices/auth'
 export const Profile = () => {
   const [fullName, setFullName] = React.useState('')
   const [email, setEmail] = React.useState('')
+  const [avatarUrl, setAvatarUrl] = React.useState('')
   const [isEditing, setIsEditing] = React.useState(false)
   const dispatch = useDispatch();
 
@@ -20,10 +21,11 @@ export const Profile = () => {
   const onEditClick = async ()=>{
     await setFullName(userData.fullName);
     await setEmail(userData.email);
+    await setAvatarUrl(userData.avatarUrl)
     setIsEditing(true);
   }
-  const onSaveSubmit = async (fullName, email)=>{
-    const values = {fullName, email};
+  const onSaveSubmit = async (fullName, email, avatarUrl)=>{
+    const values = {fullName, email, avatarUrl};
     // axios.patch('/auth/me', values)
     await dispatch(fetchUpdateMe(values))
     setIsEditing(false)
@@ -34,7 +36,8 @@ export const Profile = () => {
     <div className={style.wrapper}>
       <Paper className = {style.paper}>
         <h2>User's Profile</h2>
-        <img src='/noavatar.png' alt='user avatar'/>
+        {avatarUrl?<img src = {avatarUrl} alt='user avatar'/>:
+        <img src='/noavatar.png' alt='user avatar'/>} 
         <div className={style.infoForm}>
           <h3>Full name</h3>
           <h3>E-mail</h3>
@@ -53,9 +56,12 @@ export const Profile = () => {
           </>
             }
         </div>:''}
+        <div className = {style.editAvatarBtn}>
+            <Button variant = "outlined">Load Avatar</Button>
+        </div>
         {isEditing?
           <div className={style.buttonBlock}>
-            <Button variant="contained" onClick={()=>onSaveSubmit(fullName, email)}>Save</Button>
+            <Button variant="contained" onClick={()=>onSaveSubmit(fullName, email, avatarUrl)}>Save</Button>
           </div>
              : 
           <div className={style.buttonBlock}>
