@@ -8,16 +8,15 @@ import style from './Header.module.scss'
 
 export const Header = () => {
     const dispatch = useDispatch();
-    const isLoginned = useSelector(checkIfAuth);    
+    const isLoginned = useSelector(checkIfAuth); 
+    
     const onClickLogOut = ()=>{
         if(window.confirm('Are you sure you want log out?')){
             dispatch(logOut())
             window.localStorage.removeItem('token')
         }
-        
     };
-   const avatarUrl =null;
-    
+    const userData = useSelector(state=>state.auth.userData) 
     return (
     <div className={style.wrapper}>
         <Container maxWidth='lg'>
@@ -30,7 +29,7 @@ export const Header = () => {
                     {isLoginned?
                         <>
                             <Link to="/auth/me" className={style.avatarLink}>
-                                <img className={style.userAvatar} src={avatarUrl? avatarUrl : '/noavatar.png'} alt='userAvatar' />
+                                <img className={style.userAvatar} src={userData.avatarUrl ? `http://localhost:7000${userData.avatarUrl}`:'/noavatar.png'} alt='userAvatar' />
                             </Link>
                             <Link to="/post/create">
                                 <Button variant = "contained">New Post</Button>

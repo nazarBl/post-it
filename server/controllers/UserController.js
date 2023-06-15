@@ -24,7 +24,7 @@ const UserController = {
             email:req.body.email,
             fullName:req.body.fullName,  
             password: passwordHash,
-            avatarUrl:req.body.avatarUrl?req.body.avatarUrl:'',
+            avatarUrl:req.body.avatarUrl?req.body.avatarUrl:"",
         })
     
         const user = await doc.save()
@@ -111,11 +111,11 @@ const UserController = {
         try {
             const userId = req.userId;
 
-            const {fullName,email, avatarUrl} = req.body;
+            const {fullName, email, avatarUrl} = req.body;
             const updatedUser = await UserModel.updateOne({
                 _id:userId,
             },{
-                fullName,email, avatarUrl
+                fullName, email, avatarUrl
            
             })
             return res.status(200).json(updatedUser)

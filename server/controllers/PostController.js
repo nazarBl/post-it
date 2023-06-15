@@ -1,6 +1,6 @@
 const PostModel = require('../models/Post')
 
-const dataConverter = (data)=>{
+const dataConverter = (data)=>{ // Changes time format to more readable for client
     if (data.length){
         for(post of data){
             let month =post.createdAt.toString().split(' ')[1]

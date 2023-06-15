@@ -82,6 +82,7 @@ const authSlice =createSlice({
             state.status = 'loaded';
             state.userData.fullName = action.payload.fullName;
             state.userData.email = action.payload.email;
+            state.userData.avatarUrl = action.payload.avatarUrl;
         },
         [fetchUpdateMe.rejected]:(state)=>{
             state.status = 'error';

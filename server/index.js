@@ -2,6 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const multer = require('multer') // multer is used to work with uploading images
 const cors = require('cors') // cors make possible to run server and client on same device
+const path = require('path')
 
 const {registerValidation, loginValidation, newPostValidation} = require('./validations')
 const {checkAuth, handleValidationErrors} = require('./utils/index.js')
@@ -26,7 +27,17 @@ const postImgStorage = multer.diskStorage({
     }   
 })
 
-const upload = multer({storage:postImgStorage})
+const userAvatarStorage = multer.diskStorage({
+    destination: (req,file,cb)=>{
+        cb(null, 'uploads/avatars')
+    },
+    filename: (req,file,cb)=>{
+        cb(null, Date.now()+path.extname(file.originalname))
+    }
+})
+
+const uploadPostImg = multer({storage:postImgStorage})
+const uploadUserAvatar = multer({storage:userAvatarStorage})
 
 app.use(express.json());
 app.use(cors())
@@ -39,13 +50,19 @@ app.post('/auth/login', loginValidation, handleValidationErrors, UserController.
 app.get('/auth/me', checkAuth, UserController.getMe)
 app.patch('/auth/me', checkAuth, UserController.updateMe)
 
-app.post('/upload/postImg', checkAuth, upload.single('postImage'), (req,res)=>{ // upload image
+app.post('/upload/postImage', checkAuth, uploadPostImg.single('postImage'), (req,res)=>{ // upload image
     res.json({
         url:`/uploads/postImg/${req.file.originalname}`,
     })
-})  
+}) 
 
-app.get ('/tags', TagsController.getActualTags);
+app.post('/upload/avatar', checkAuth, uploadUserAvatar.single('userAvatar'), (req,res)=>{
+    res.json({
+        url:`/uploads/avatars/${req.file.filename}`,
+    })
+})
+
+app.get ('/tags', TagsController.getActualTags);        
 app.get('/posts/:tagName', PostController.getPostsByTag);
 
 app.get('/posts', PostController.getAllPosts);

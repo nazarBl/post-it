@@ -21,10 +21,12 @@
             grid-column: 1/4;
         }
         
-        img{
-            width: 6rem;
+        .userAvatar{
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
         }
-
+        
         .infoForm {
             align-self: start;
             display:grid;
