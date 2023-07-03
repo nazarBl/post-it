@@ -6,11 +6,11 @@ const path = require('path')
 
 const {registerValidation, loginValidation, newPostValidation} = require('./validations')
 const {checkAuth, handleValidationErrors} = require('./utils/index.js')
-const {UserController, PostController, TagsController} = require('./controllers/index.js')
+const {UserController, PostController, TagsController, CommentsController} = require('./controllers/index.js')
 
 const PORT = 7000;
 
-mongoose.connect('mongodb+srv://Admin:123123123@cluster0.afio7fk.mongodb.net/?retryWrites=true&w=majority').then(()=>{
+mongoose.connect('mongodb+srv://Admin:123123123@cluster0.afio7fk.mongodb.net/post-it?retryWrites=true&w=majority').then(()=>{
     console.log('DB connected');
 }).catch((err)=>{
     console.log('DB connection error', err);
@@ -67,10 +67,14 @@ app.get('/posts/:tagName', PostController.getPostsByTag);
 
 app.get('/posts', PostController.getAllPosts);
 app.get('/popular', PostController.getPopularPosts)
-app.post('/post/create', checkAuth, newPostValidation, handleValidationErrors, PostController.create); 
+app.post('/post/create', checkAuth, newPostValidation, handleValidationErrors, PostController.createPost); 
 app.get('/post/:id', PostController.getPostById);
-app.delete('/post/:id', checkAuth, PostController.remove); 
-app.patch('/post/:id', checkAuth, newPostValidation, handleValidationErrors, PostController.update);
+app.delete('/post/:id', checkAuth, PostController.removePost); 
+app.patch('/post/:id', checkAuth, newPostValidation, handleValidationErrors, PostController.updatePost);
+
+
+app.get('/comments/:postId', checkAuth, CommentsController.getCommentsByPostId)
+
 
 app.listen(PORT, (err)=>{
     

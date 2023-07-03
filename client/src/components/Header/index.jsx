@@ -3,7 +3,7 @@ import { Button, Container } from '@mui/material';
 import React from 'react'
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { checkIfAuth, logOut } from '../../redux/slices/auth';
+import { checkIfAuth, logOut } from '../../redux/slices/authSlice';
 import style from './Header.module.scss'
 
 export const Header = () => {

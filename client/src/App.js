@@ -6,7 +6,7 @@ import { Header }  from './components';
 import { useDispatch } from 'react-redux';
 
 import { Home, FullPost, Registration, AddPost, Login, Profile } from "./Pages";
-import { fetchAuthMe } from './redux/slices/auth';
+import { fetchAuthMe } from './redux/slices/authSlice';
 
 function App() {
   const dispatch = useDispatch();

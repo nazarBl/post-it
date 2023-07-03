@@ -6,7 +6,7 @@ import "easymde/dist/easymde.min.css";
 import style from "./AddPost.module.scss";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { checkIfAuth } from "../../redux/slices/auth";
+import { checkIfAuth } from "../../redux/slices/authSlice";
 import axios from '../../axios.js'
 
 export const AddPost = () => {

@@ -5,7 +5,7 @@ import {useForm} from 'react-hook-form';
 
 import style from "./Registration.module.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { checkIfAuth, fetchRegister } from "../../redux/slices/auth";
+import { checkIfAuth, fetchRegister } from "../../redux/slices/authSlice";
 import {Navigate} from 'react-router-dom'
 
 export const Registration = () => {

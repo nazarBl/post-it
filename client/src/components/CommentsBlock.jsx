@@ -9,10 +9,13 @@ import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
 import Skeleton from "@mui/material/Skeleton";
 
-export const CommentsBlock = ({ items, children, isLoading = true }) => {
+export const CommentsBlock = ({ items, isLoading = true }) => {
+  if(items) {
+    isLoading=false;
+  }
   return (
     <SideBlock title="Comments">
-      <List>
+        <List>
         {(isLoading ? [...Array(5)] : items).map((obj, index) => (
           <React.Fragment key={index}>
             <ListItem alignItems="flex-start">
@@ -39,7 +42,6 @@ export const CommentsBlock = ({ items, children, isLoading = true }) => {
           </React.Fragment>
         ))}
       </List>
-      {children}
     </SideBlock>
   );
 };

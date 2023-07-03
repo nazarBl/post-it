@@ -21,7 +21,7 @@ const dataConverter = (data)=>{ // Changes time format to more readable for clie
 }
 
 module.exports = {
-    create: async (req, res)=>{
+    createPost: async (req, res)=>{
         try {
             const doc = new PostModel({
                 title:req.body.title,
@@ -91,7 +91,6 @@ module.exports = {
             res.status(500).json({"error":"error.message"})
         }
     },
-
     getPostsByTag: async (req, res)=>{
        try {
         const tagFilter = req.params.tagName
@@ -103,8 +102,7 @@ module.exports = {
         res.status(500).json({message:error.message})
        }
     },
-    
-    remove: async (req,res)=>{
+    removePost: async (req,res)=>{
         try {
             const postId = req.params.id;
 
@@ -124,7 +122,7 @@ module.exports = {
             })
         }
     },
-    update: async (req,res)=>{
+    updatePost: async (req,res)=>{
         try {
             const _id = req.body.id;
 
@@ -149,5 +147,25 @@ module.exports = {
                 message:'Post updating failed'
             })
         }
+    },
+
+    createComment: (req,res)=>{
+        let comment = req.body.comment // get comment object and its author id from frontend
+        comment.author = req.body.userId
+        PostModel.findOneAndUpdate(
+            req.body.postId,           // also get post's id from frontend
+            { $push: {comments:comment} },
+        )
+        .populate('comments.author', 'name, avatarUrl')
+        
+        .exec((err, result)=>{
+            if(err) {
+                return res.status(400).json({
+                    error:err,
+                })
+            } else {
+                return res.status(200).json(result)
+            }
+        })
     }
 }

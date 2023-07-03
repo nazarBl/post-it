@@ -6,11 +6,14 @@ import { CommentsBlock } from "../components/CommentsBlock";
 import { useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import axios from '../axios.js';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCommentsByPostId } from '../redux/slices/commentsSlice';
 
 export const FullPost = () => {
   const [post, setPost] = React.useState();
   const [isLoading, setIsLoading] = React.useState(true);
 
+  const dispatch = useDispatch()
   const {id} = useParams();
   React.useEffect(()=>{
     axios.get(`/post/${id}`).then(res=>{
@@ -20,7 +23,11 @@ export const FullPost = () => {
       console.warn(err);
       alert('Error while getting post') 
     })
-  },[id])
+    dispatch(fetchCommentsByPostId(id))
+  },[id, dispatch])
+
+  const comments = useSelector(state=>state.comments.items)
+
   if (isLoading) {
     return <Post isLoading={isLoading} isFullPost/>
   }
@@ -42,26 +49,10 @@ export const FullPost = () => {
         </Post>
         
         <CommentsBlock 
-          items={[
-            {
-              user: {
-                fullName: "Lynn Karter",
-                avatarUrl: "https://mui.com/static/images/avatar/1.jpg",
-              },
-              text: "WOOOOW!",
-            },  
-            {
-              user: {
-                fullName: "Roberto Pagani",
-                avatarUrl: "https://mui.com/static/images/avatar/2.jpg",
-              },
-              text: "I want join you ASAP",
-            },
-          ]}
+          items={comments}
         >
-        <Index />
         </CommentsBlock>
-        
+        <Index />
     </>
   )
 }

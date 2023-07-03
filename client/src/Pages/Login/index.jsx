@@ -3,7 +3,7 @@ import { Button, Paper, TextField, Typography } from '@mui/material';
 import {useForm} from 'react-hook-form';
 import {Navigate} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux';
-import {checkIfAuth, fetchUserData} from '../../redux/slices/auth'
+import {checkIfAuth, fetchUserData} from '../../redux/slices/authSlice'
 
 import style from './Login.module.scss';
 
