@@ -31,7 +31,7 @@ export const Post = ({_id, title, text, imageUrl, dateOfCreate, author, createdA
     <div className={clsx(style.root, { [style.rootFull]: isFullPost })}>
       {isEditable && (
         <div className={style.editButtons}> 
-          <Link to={`/post/${_id}/edit`}>
+          <Link to={`/posts/${_id}/edit`}>
             <IconButton color="primary">
               <EditIcon />
             </IconButton>
@@ -50,7 +50,7 @@ export const Post = ({_id, title, text, imageUrl, dateOfCreate, author, createdA
           <UserInfo {...author} extraInfo={dateOfCreate} />
           <div className={style.indention}> 
               <h2 className={clsx(style.title, { [style.titleFull]: isFullPost })}>
-                {isFullPost ? title : <Link to={`/post/${_id}`}>{title}</Link>}
+                {isFullPost ? title : <Link to={`/posts/${_id}`}>{title}</Link>}
               </h2>
               <ul className={style.tags}>
                   {tags?tags.map((name)=>(

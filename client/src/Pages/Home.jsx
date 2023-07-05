@@ -7,25 +7,25 @@ import { TagsBlock } from '../components';
 import { CommentsBlock } from '../components/';
 import { fetchPopularPosts, fetchPosts, fetchPostsByTagFilter, fetchTags } from '../redux/slices/homeSlice.js';
 import TabsMenu from '../components/TabsMenu';
-import { useParams } from 'react-router-dom';
+import {useSearchParams} from 'react-router-dom';
 
 export const Home = () => {
   const dispatch = useDispatch();
-  let {tagName} = useParams();
   const pathname = window.location.pathname;
-  
+  const [searchParams] = useSearchParams()
+  let tagName = searchParams.get('tagName')
   React.useEffect(()=>{
     switch (pathname) {
-      case '/popular':
+      case '/posts/popular':
         dispatch(fetchPopularPosts())
+        break;
+      case `/posts/:${tagName}`:
+        dispatch(fetchPostsByTagFilter(tagName)) 
         break;
       case '/':
         dispatch(fetchPosts()) 
         break;
-      case `/posts/${tagName}`:
-        dispatch(fetchPostsByTagFilter(tagName)) 
-        break;
-    
+      
       default:
         break;
     }

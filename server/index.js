@@ -4,9 +4,11 @@ const multer = require('multer') // multer is used to work with uploading images
 const cors = require('cors') // cors make possible to run server and client on same device
 const path = require('path')
 
-const {registerValidation, loginValidation, newPostValidation} = require('./validations')
-const {checkAuth, handleValidationErrors} = require('./utils/index.js')
-const {UserController, PostController, TagsController, CommentsController} = require('./controllers/index.js')
+const postsRouter = require('./routes/postsRouter')
+const authRouter = require('./routes/authRouter')
+
+const {checkAuth} = require('./middlewares/index.js')
+const {TagsController, CommentsController} = require('./controllers/index.js')
 
 const PORT = 7000;
 
@@ -45,10 +47,7 @@ app.use('/uploads', express.static('uploads'))
 
 app.get('/',(req,res)=>res.send('Home page'))
 
-app.post('/auth/registration', registerValidation, handleValidationErrors, UserController.register)
-app.post('/auth/login', loginValidation, handleValidationErrors, UserController.login)
-app.get('/auth/me', checkAuth, UserController.getMe)
-app.patch('/auth/me', checkAuth, UserController.updateMe)
+app.use('/auth', authRouter)
 
 app.post('/upload/postImage', checkAuth, uploadPostImg.single('postImage'), (req,res)=>{ // upload image
     res.json({
@@ -63,21 +62,12 @@ app.post('/upload/avatar', checkAuth, uploadUserAvatar.single('userAvatar'), (re
 })
 
 app.get ('/tags', TagsController.getActualTags);        
-app.get('/posts/:tagName', PostController.getPostsByTag);
-
-app.get('/posts', PostController.getAllPosts);
-app.get('/popular', PostController.getPopularPosts)
-app.post('/post/create', checkAuth, newPostValidation, handleValidationErrors, PostController.createPost); 
-app.get('/post/:id', PostController.getPostById);
-app.delete('/post/:id', checkAuth, PostController.removePost); 
-app.patch('/post/:id', checkAuth, newPostValidation, handleValidationErrors, PostController.updatePost);
-
+app.use('/posts', postsRouter )
 
 app.get('/comments/:postId', checkAuth, CommentsController.getCommentsByPostId)
 
 
 app.listen(PORT, (err)=>{
-    
     if(err){
         console.log(`Error when try start a server!`);
     } else {

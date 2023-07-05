@@ -45,7 +45,12 @@ module.exports = {
     },
     getAllPosts: async (req, res)=>{
         try {
-
+            const tagName=req.query.tagName
+            if (tagName) {
+                const postsByTag = await PostModel.find({tags:tagName})
+                dataConverter(postsByTag);
+                return res.json(postsByTag)
+            }
         const posts = await PostModel.find().sort({createdAt:-1}).populate('author').exec();
         dataConverter(posts);
         res.json(posts)
@@ -93,8 +98,7 @@ module.exports = {
     },
     getPostsByTag: async (req, res)=>{
        try {
-        const tagFilter = req.params.tagName
-       
+        const tagFilter = req.query.tagName
         const filteredPosts = await PostModel.find({tags:tagFilter}).populate('author').exec()
         dataConverter(filteredPosts);
        res.status(200).json(filteredPosts)

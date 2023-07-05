@@ -13,17 +13,17 @@ export const fetchTags = createAsyncThunk('home/fetchTags', async ()=>{
 })
 
 export const fetchPostsByTagFilter = createAsyncThunk('home/fetchPostsByTagFilter', async (tagName)=>{
-    const {data} = await axios.get(`/posts/${tagName}`)
+    const {data} = await axios.get(`/posts/?tagName=${tagName}`)
     return data
 })
 
 export const fetchPopularPosts = createAsyncThunk('home/fetchPopularPosts', async()=>{
-    const {data} = await axios.get('/popular')
+    const {data} = await axios.get('/posts/popular')
     return data
 })
 
 export const fetchRemovePost = createAsyncThunk('home/fetchRemovePost', async(id)=> 
-axios.delete(`/post/${id}`))
+axios.delete(`/posts/${id}`))
 
 const initialState = {
     posts:{

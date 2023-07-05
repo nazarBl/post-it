@@ -16,7 +16,7 @@ export const FullPost = () => {
   const dispatch = useDispatch()
   const {id} = useParams();
   React.useEffect(()=>{
-    axios.get(`/post/${id}`).then(res=>{
+    axios.get(`/posts/${id}`).then(res=>{
       setPost(res.data);
       setIsLoading(false)
     }).catch((err)=>{
