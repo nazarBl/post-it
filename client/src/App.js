@@ -30,6 +30,7 @@ function App() {
         <Routes>
           <Route path="/" element = {<Home/>}/>
           <Route path="/posts/popular" element = {<Home/>}/>
+          <Route path="/posts/myPosts" element = {<Home/>}/>
           <Route path="/posts" element = {<Home/>}/>
           <Route path="/posts/:id" element = {<FullPost/>}/>
           <Route path="/posts/:id/edit" element = {<AddPost/>}/>

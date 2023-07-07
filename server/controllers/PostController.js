@@ -1,4 +1,5 @@
 const PostModel = require('../models/Post')
+const { ObjectId } = require('mongodb')
 
 const dataConverter = (data)=>{ // Changes time format to more readable for client
     if (data.length){
@@ -10,11 +11,13 @@ const dataConverter = (data)=>{ // Changes time format to more readable for clie
             post.dateOfCreate =[dayOfTheMonth, month, year, time].join(' ');
         }
     } else {
-        let month =data.createdAt.toString().split(' ')[1]
-        let year = data.createdAt.toString().split(' ')[3]
-        let dayOfTheMonth = data.createdAt.toString().split(' ')[2]
-        let time =data.createdAt.toString().split(' ')[4].split(':').slice(0,2).join(':');
-        data.dateOfCreate =[dayOfTheMonth, month, year, time].join(' ');
+        if(data){
+            let month =data.createdAt.toString().split(' ')[1]
+            let year = data.createdAt.toString().split(' ')[3]
+            let dayOfTheMonth = data.createdAt.toString().split(' ')[2]
+            let time =data.createdAt.toString().split(' ')[4].split(':').slice(0,2).join(':');
+            data.dateOfCreate =[dayOfTheMonth, month, year, time].join(' ');
+        }
     }
    
     return data
@@ -94,6 +97,17 @@ module.exports = {
             return res.json(popularPosts)
         } catch (error) {
             res.status(500).json({"error":"error.message"})
+        }
+    },
+    getMyPosts: async(req,res)=>{
+        const userID = toString(req.userId)
+        console.log(userID);
+        try {
+            const myPosts = await PostModel.find({author: new ObjectId(req.userId)}).populate('author')
+            dataConverter(myPosts);
+            return res.json(myPosts)
+        } catch (error) {
+            res.status(500).json({"error":error.message, "userID":userID})
         }
     },
     removePost: async (req,res)=>{

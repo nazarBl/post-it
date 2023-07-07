@@ -5,15 +5,18 @@ import {Grid} from '@mui/material';
 import { Post } from '../components/';
 import { TagsBlock } from '../components';
 import { CommentsBlock } from '../components/';
-import { fetchPopularPosts, fetchPosts, fetchPostsByTagFilter, fetchTags } from '../redux/slices/homeSlice.js';
+import { fetchMyPosts, fetchPopularPosts, fetchPosts, fetchPostsByTagFilter, fetchTags } from '../redux/slices/homeSlice.js';
 import TabsMenu from '../components/TabsMenu';
 import {useSearchParams} from 'react-router-dom';
 
 export const Home = () => {
+  const {userData} = useSelector(state=>state.auth)
+
   const dispatch = useDispatch();
   const pathname = window.location.pathname;
   const [searchParams] = useSearchParams()
   let tagName = searchParams.get('tagName')
+
   React.useEffect(()=>{
     switch (pathname) {
       case '/posts/popular':
@@ -21,6 +24,9 @@ export const Home = () => {
         break;
       case `/posts/:${tagName}`:
         dispatch(fetchPostsByTagFilter(tagName)) 
+        break;
+      case '/posts/myPosts':
+        dispatch(fetchMyPosts(userData._id)) 
         break;
       case '/':
         dispatch(fetchPosts()) 
@@ -30,10 +36,10 @@ export const Home = () => {
         break;
     }
       dispatch(fetchTags())
-  },[dispatch, pathname, tagName])
+  },[dispatch, pathname, tagName, userData])
 
   const {posts, tags} =useSelector(state=>state.home)
-  const {userData} = useSelector(state=>state.auth)
+
   
   if (tagName){
     tagName = tagName.replace(' ','%20')

@@ -6,7 +6,7 @@ const TabsMenu = () => {
     const pathname = window.location.pathname;
     let [searchParams] = useSearchParams();
     const tagName = searchParams.get('tagName')
-    
+
     if(!tagName){
         return (
             <>
@@ -23,6 +23,12 @@ const TabsMenu = () => {
                     component = {Link}
                     value = {'/posts/popular'}
                     to={'/posts/popular'}
+                  />
+                  <Tab 
+                    label="My posts"
+                    component = {Link}
+                    value = {'/posts/myPosts'}
+                    to={'/posts/myPosts'}
                   />
               </Tabs>
               </>
