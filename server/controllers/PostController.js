@@ -47,7 +47,7 @@ module.exports = {
         try {
             const tagName=req.query.tagName
             if (tagName) {
-                const postsByTag = await PostModel.find({tags:tagName})
+                const postsByTag = await PostModel.find({tags:tagName}).populate('author')
                 dataConverter(postsByTag);
                 return res.json(postsByTag)
             }
@@ -89,22 +89,12 @@ module.exports = {
     },
     getPopularPosts: async (req, res)=>{
         try {
-            const popularPosts = await PostModel.find().sort({"viewsCount":-1}).populate('author').exec()
+            const popularPosts = await PostModel.find().sort({"viewsCount":-1}).populate('author')
             dataConverter(popularPosts)    
             return res.json(popularPosts)
         } catch (error) {
             res.status(500).json({"error":"error.message"})
         }
-    },
-    getPostsByTag: async (req, res)=>{
-       try {
-        const tagFilter = req.query.tagName
-        const filteredPosts = await PostModel.find({tags:tagFilter}).populate('author').exec()
-        dataConverter(filteredPosts);
-       res.status(200).json(filteredPosts)
-       } catch (error) {
-        res.status(500).json({message:error.message})
-       }
     },
     removePost: async (req,res)=>{
         try {

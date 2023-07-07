@@ -12,7 +12,7 @@ export const SearchInput = () => {
     if(e.key && e.key==="Enter"){
       setSearchValue('')
       tagName = tagName.split(' ').map(word=>word.replace(word.split('')[0], word.split('')[0].toUpperCase())).join('')
-      navigate(`/posts/${tagName}`)
+      navigate(`/posts?tagName=${tagName}`)
     }
     
   }
