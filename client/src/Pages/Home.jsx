@@ -78,22 +78,7 @@ export const Home = () => {
               isLoading ={isTagsLoading}
             />
         <CommentsBlock 
-          items={[ // HARDCODED DATA!!!
-            {
-              user: {
-                fullName: "John Torm",
-                avatarUrl: "https://mui.com/static/images/avatar/1.jpg",
-              },
-              text: "Nice place!",
-            },
-            {
-              user: {
-                fullName: "Bob Loren",
-                avatarUrl: "https://mui.com/static/images/avatar/2.jpg",
-              },
-              text: "What about pricing?",
-            },
-          ]}
+          postId='640cb4e527c515669ac3d310'
           isLoading={false}
         />
         </Grid> 

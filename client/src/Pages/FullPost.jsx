@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Index } from '../components/AddComment/';
+import {AddComment} from '../components/AddComment/';
 import { Post } from "../components/Post";
 import { CommentsBlock } from "../components/CommentsBlock";
 import { useParams } from 'react-router-dom';
@@ -15,19 +15,19 @@ export const FullPost = () => {
 
   const dispatch = useDispatch()
   const {id} = useParams();
+
   React.useEffect(()=>{
     axios.get(`/posts/${id}`).then(res=>{
       setPost(res.data);
+      dispatch(fetchCommentsByPostId(id))
       setIsLoading(false)
     }).catch((err)=>{
       console.warn(err);
       alert('Error while getting post') 
     })
-    dispatch(fetchCommentsByPostId(id))
   },[id, dispatch])
 
   const comments = useSelector(state=>state.comments.items)
-
   if (isLoading) {
     return <Post isLoading={isLoading} isFullPost/>
   }
@@ -49,10 +49,10 @@ export const FullPost = () => {
         </Post>
         
         <CommentsBlock 
-          items={comments}
+          comments={comments}
         >
         </CommentsBlock>
-        <Index />
+        <AddComment />
     </>
   )
 }

@@ -8,11 +8,6 @@ export const fetchCommentsByPostId = createAsyncThunk('comments/fetchCommentsByP
     return data
 })
 
-export const fetchCreateComment = createAsyncThunk('comments/fetchCreateComment', async(params)=>{
-    const {data} = await axios.post('/post/comments/create', params)
-    return data
-})  
-
 export const fetchUpdateComment = createAsyncThunk('comments/fetchUpdateComment', async(params)=>{
     const {data} = await axios.patch('/post/comments/edit')
     return data
@@ -42,7 +37,7 @@ const commentsSlice = createSlice({
         [fetchCommentsByPostId.rejected]:(state)=>{
             state.status = 'error'
             state.items = []
-        },
+        }
     }
 })
 

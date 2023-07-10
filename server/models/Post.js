@@ -19,12 +19,10 @@ const PostSchem = new mongoose.Schema({
             type: Array,
             default: []
         },
-        comments: [
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'Comment'
-            }
-        ],
+        comments: {
+            type:Array,
+            default: []
+        },
         viewsCount:{
             type: Number,
             default: 0,

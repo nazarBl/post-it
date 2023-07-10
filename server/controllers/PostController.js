@@ -32,6 +32,7 @@ module.exports = {
                 imageUrl: req.body.imageUrl,
                 author: req.userId,
                 viewsCount: req.body.viewsCount,
+                commentsCount:0,
                 tags: req.body.tags.split(','),
             })
 
@@ -100,14 +101,12 @@ module.exports = {
         }
     },
     getMyPosts: async(req,res)=>{
-        const userID = toString(req.userId)
-        console.log(userID);
         try {
             const myPosts = await PostModel.find({author: new ObjectId(req.userId)}).populate('author')
             dataConverter(myPosts);
             return res.json(myPosts)
         } catch (error) {
-            res.status(500).json({"error":error.message, "userID":userID})
+            res.status(500).json({"error":error.message})
         }
     },
     removePost: async (req,res)=>{
@@ -143,6 +142,8 @@ module.exports = {
                 imageUrl: req.body.imageUrl,
                 author: req.userId,
                 viewsCount: req.body.viewsCount,
+                commentsCount:req.body.commentsCount,
+                comments:req.body.comments,
                 tags: req.body.tags.replace(' ','').split(','),
             })
 
@@ -155,25 +156,5 @@ module.exports = {
                 message:'Post updating failed'
             })
         }
-    },
-
-    createComment: (req,res)=>{
-        let comment = req.body.comment // get comment object and its author id from frontend
-        comment.author = req.body.userId
-        PostModel.findOneAndUpdate(
-            req.body.postId,           // also get post's id from frontend
-            { $push: {comments:comment} },
-        )
-        .populate('comments.author', 'name, avatarUrl')
-        
-        .exec((err, result)=>{
-            if(err) {
-                return res.status(400).json({
-                    error:err,
-                })
-            } else {
-                return res.status(200).json(result)
-            }
-        })
     }
 }

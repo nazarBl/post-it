@@ -6,9 +6,10 @@ const path = require('path')
 
 const postsRouter = require('./routes/postsRouter')
 const authRouter = require('./routes/authRouter')
+const commentsRouter = require('./routes/commentsRouter')
 
 const {checkAuth} = require('./middlewares/index.js')
-const {TagsController, CommentsController} = require('./controllers/index.js')
+const {TagsController} = require('./controllers/index.js')
 
 const PORT = 7000;
 
@@ -62,9 +63,8 @@ app.post('/upload/avatar', checkAuth, uploadUserAvatar.single('userAvatar'), (re
 })
 
 app.get ('/tags', TagsController.getActualTags);        
-app.use('/posts', postsRouter )
-
-app.get('/comments/:postId', checkAuth, CommentsController.getCommentsByPostId)
+app.use('/posts', postsRouter ) // Posts routers
+app.use('/comments', commentsRouter) // Comments routers
 
 
 app.listen(PORT, (err)=>{

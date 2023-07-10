@@ -10,5 +10,21 @@ module.exports = {
             console.log(error);
             return res.status(500).json(error)
         }
+    },
+    createNewComment: async (req,res) => {
+        try {
+            const user = req.userId
+            const {parentPost,commentText} = req.body;
+            const doc = new CommentModel({
+                user,
+                parentPost,
+                text:commentText,
+            })
+            const newComment = await doc.save()
+            return res.status(204).json(newComment)
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json(error)
+        }
     }
 }
