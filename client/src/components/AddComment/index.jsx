@@ -12,17 +12,17 @@ export const AddComment = () => {
   const dispatch = useDispatch();
   const userAvatar = useSelector(state=>state.auth.userData.avatarUrl)
   const {id} = useParams()
-  const [commentText, setCommentText] = useState('')
+  const [commentText, setCommentText] = useState('Test it')
   const textAreaRef = useRef()
   const params = {
     commentText,
     parentPost:id,
   }
-  const sumbitComment = (params)=>{
+  const sumbitComment = async (params,event)=>{
+    event.preventDefault()
     axios.post('/comments/newComment', params).then(res=>{
       dispatch(fetchCommentsByPostId(id))
-      textAreaRef.current.value=''
-      console.log(textAreaRef.current.lastChild)
+      setCommentText('')
     })
   }
   const changeCommentText = (event) => {
@@ -41,12 +41,13 @@ export const AddComment = () => {
             label="Leave a comment..."
             variant="outlined"
             ref={textAreaRef}
+            value={commentText}
             maxRows={10}
             onChange={(e)=>changeCommentText(e)}
             multiline
             fullWidth
           />
-          <Button variant="contained" onClick ={()=>sumbitComment(params)}>Send</Button>
+          <Button variant="contained" onClick ={(event)=>sumbitComment(params,event)}>Send</Button>
         </div>
       </div>
     </>

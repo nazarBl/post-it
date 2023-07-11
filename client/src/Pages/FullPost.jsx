@@ -19,7 +19,15 @@ export const FullPost = () => {
   React.useEffect(()=>{
     axios.get(`/posts/${id}`).then(res=>{
       setPost(res.data);
-      dispatch(fetchCommentsByPostId(id))
+      dispatch(fetchCommentsByPostId(id)).then(comms=>{
+        console.log(comms.payload.length)
+        setPost(prev=>{
+          let newPost = {...prev}
+          newPost.commentsCount = comms.payload.lenght
+          console.log(newPost)
+          return newPost
+        })
+      })
       setIsLoading(false)
     }).catch((err)=>{
       console.warn(err);

@@ -132,20 +132,29 @@ module.exports = {
     updatePost: async (req,res)=>{
         try {
             const _id = req.body.id;
-
-            await PostModel.updateOne({
-                _id,
-            },
-            {
-                title:req.body.title,
-                text: req.body.text,
-                imageUrl: req.body.imageUrl,
-                author: req.userId,
-                viewsCount: req.body.viewsCount,
-                commentsCount:req.body.commentsCount,
-                comments:req.body.comments,
-                tags: req.body.tags.replace(' ','').split(','),
-            })
+            const addComment = req.body.addComment
+            if (!addComment) {
+                await PostModel.updateOne({
+                    _id,
+                },
+                {
+                    title:req.body.title,
+                    text: req.body.text,
+                    imageUrl: req.body.imageUrl,
+                    author: req.userId,
+                    viewsCount: req.body.viewsCount,
+                    commentsCount:req.body.commentsCount,
+                    comments:req.body.comments,
+                    tags: req.body.tags.replace(' ','').split(','),
+                })
+            } else {
+                await PostModel.findOneAndUpdate({
+                    _id,
+                },
+                {
+                    $inc: {commentsCount: 1 },
+                })
+            }
 
             res.json({
                 message:'Post was successfully updated'
