@@ -10,7 +10,8 @@ import axios from "../../axios.js";
 
 export const AddComment = () => {
   const dispatch = useDispatch();
-  const userAvatar = useSelector(state=>state.auth.userData.avatarUrl)
+  let userAvatar = useSelector(state=>state.auth.userData?state.auth.userData.avatarUrl:'')
+
   const {id} = useParams()
   const [commentText, setCommentText] = useState('')
   const textAreaRef = useRef()
@@ -34,6 +35,7 @@ export const AddComment = () => {
   
   return (
     <>
+    {userAvatar?(
       <div className={style.root}>
         <Avatar
           classes={{ root: style.avatar }}
@@ -54,7 +56,8 @@ export const AddComment = () => {
           {/* SEND BUTTON */}
           <Button variant="contained" onClick ={(event)=>sumbitComment(params,event)}>Send</Button>
         </div>
-      </div>
+      </div>) : 'Please Log in to leave a comment'
+    }
     </>
   );
 };

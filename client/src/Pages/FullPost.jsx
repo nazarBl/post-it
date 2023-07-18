@@ -28,7 +28,6 @@ export const FullPost = () => {
   },[id, dispatch])
 
   const comments = useSelector(state=>state.comments.items)
-  console.log(comments)
 
   if (isLoading) {
     return <Post isLoading={isLoading} isFullPost/>
@@ -54,7 +53,7 @@ export const FullPost = () => {
           comments={comments}
         >
         </CommentsBlock>
-        <AddComment />
+        <AddComment/>
     </>
   )
 }
