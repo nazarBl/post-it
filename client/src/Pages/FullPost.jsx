@@ -15,7 +15,7 @@ export const FullPost = () => {
 
   const dispatch = useDispatch()
   const {id} = useParams();
-  const comments = useSelector(state=>state.comments.items)
+  
   React.useEffect(()=>{
     axios.get(`/posts/${id}`).then(res=>{
       setPost(res.data);
@@ -26,6 +26,9 @@ export const FullPost = () => {
       alert('Error while getting post') 
     })
   },[id, dispatch])
+
+  const comments = useSelector(state=>state.comments.items)
+  console.log(comments)
 
   if (isLoading) {
     return <Post isLoading={isLoading} isFullPost/>
@@ -41,7 +44,7 @@ export const FullPost = () => {
           dateOfCreate={post.dateOfCreate}
           createdAt={post.createdAt}
           viewsCount={post.viewsCount}
-          commentsCount={post.commentsCount}
+          commentsCount={comments.length}
           tags={post.tags}
           >
           <ReactMarkdown children={post.text}/>
