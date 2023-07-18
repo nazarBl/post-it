@@ -118,7 +118,7 @@ module.exports = {
                     _id:postId
                 },
                 res.json({
-                    message:'Post was succesfully deleted'
+                    message:'Post was succesfully deleted',
                 })
             )
             
@@ -132,9 +132,7 @@ module.exports = {
     updatePost: async (req,res)=>{
         try {
             const _id = req.body.id;
-            const addComment = req.body.addComment
-            if (!addComment) {
-                await PostModel.updateOne({
+                await PostModel.findByIdAndUpdate({
                     _id,
                 },
                 {
@@ -143,26 +141,16 @@ module.exports = {
                     imageUrl: req.body.imageUrl,
                     author: req.userId,
                     viewsCount: req.body.viewsCount,
-                    commentsCount:req.body.commentsCount,
-                    comments:req.body.comments,
                     tags: req.body.tags.replace(' ','').split(','),
                 })
-            } else {
-                await PostModel.findOneAndUpdate({
-                    _id,
-                },
-                {
-                    $inc: {commentsCount: 1 },
-                })
-            }
-
+            
             res.json({
-                message:'Post was successfully updated'
+                message:'Post was successfully updated',
             })
         } catch (error) {
             console.log(error);
             res.json(500).json({
-                message:'Post updating failed'
+                message:'Post updating failed',
             })
         }
     }

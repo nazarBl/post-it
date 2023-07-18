@@ -15,19 +15,11 @@ export const FullPost = () => {
 
   const dispatch = useDispatch()
   const {id} = useParams();
-
+  const comments = useSelector(state=>state.comments.items)
   React.useEffect(()=>{
     axios.get(`/posts/${id}`).then(res=>{
       setPost(res.data);
-      dispatch(fetchCommentsByPostId(id)).then(comms=>{
-        console.log(comms.payload.length)
-        setPost(prev=>{
-          let newPost = {...prev}
-          newPost.commentsCount = comms.payload.lenght
-          console.log(newPost)
-          return newPost
-        })
-      })
+      dispatch(fetchCommentsByPostId(id))
       setIsLoading(false)
     }).catch((err)=>{
       console.warn(err);
@@ -35,7 +27,6 @@ export const FullPost = () => {
     })
   },[id, dispatch])
 
-  const comments = useSelector(state=>state.comments.items)
   if (isLoading) {
     return <Post isLoading={isLoading} isFullPost/>
   }

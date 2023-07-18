@@ -1,4 +1,5 @@
 const CommentModel = require ('../models/Comment')
+const PostModel = require('../models/Post')
 
 
 module.exports = {
@@ -21,6 +22,14 @@ module.exports = {
                 text:commentText,
             })
             const newComment = await doc.save()
+            const {newCommentId} = await CommentModel.find({user, text:commentText},{_id:1})
+            await PostModel.findOneAndUpdate(
+                { _id: parentPost },
+                { $inc: { commentsCount:1 }
+                },
+                { returnDocument: 'after' }
+            ).populate('author')
+            const updatedPost = await PostModel.find({_id:parentPost})
             return res.status(204).json(newComment)
         } catch (error) {
             console.log(error);

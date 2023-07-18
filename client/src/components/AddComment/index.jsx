@@ -12,7 +12,7 @@ export const AddComment = () => {
   const dispatch = useDispatch();
   const userAvatar = useSelector(state=>state.auth.userData.avatarUrl)
   const {id} = useParams()
-  const [commentText, setCommentText] = useState('Test it')
+  const [commentText, setCommentText] = useState('')
   const textAreaRef = useRef()
   const params = {
     commentText,

@@ -19,16 +19,16 @@ const PostSchem = new mongoose.Schema({
             type: Array,
             default: []
         },
-        comments: {
-            type:Array,
-            default: []
-        },
         viewsCount:{
             type: Number,
             default: 0,
         },
         imageUrl: String,
         dateOfCreate: String,
+        commentsCount: {
+            type:Number,
+            default:0,
+        }
 },{
     timestamps: true
 })
