@@ -131,7 +131,7 @@ module.exports = {
     },
     updatePost: async (req,res)=>{
         try {
-            const _id = req.body.id;
+            const _id = req.params.id;
                 await PostModel.findByIdAndUpdate({
                     _id,
                 },

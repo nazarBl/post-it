@@ -18,6 +18,7 @@ export const AddComment = () => {
     commentText,
     parentPost:id,
   }
+
   const sumbitComment = async (params,event)=>{
     event.preventDefault()
     axios.post('/comments/newComment', params).then(res=>{
@@ -25,10 +26,12 @@ export const AddComment = () => {
       setCommentText('')
     })
   }
+
   const changeCommentText = (event) => {
     const newText = event.target.value
     setCommentText(newText)
   }
+  
   return (
     <>
       <div className={style.root}>
@@ -47,6 +50,8 @@ export const AddComment = () => {
             multiline
             fullWidth
           />
+
+          {/* SEND BUTTON */}
           <Button variant="contained" onClick ={(event)=>sumbitComment(params,event)}>Send</Button>
         </div>
       </div>

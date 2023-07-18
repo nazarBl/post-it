@@ -50,7 +50,6 @@ export const AddPost = () => {
         tags,
         imageUrl,
       }
-
       const {data} = isEditing?
       await axios.patch(`/posts/${id}`, params) : // update post after editing
       await axios.post('/posts/create', params) // create new post
@@ -67,7 +66,7 @@ export const AddPost = () => {
       axios.get(`/posts/${id}`).then(({data})=>{
         setTitle(data.title);
         setText(data.text);
-        setTags(data.tags);
+        setTags(data.tags.join(''));
         setImageUrl(data.imageUrl);
       }).catch(err=>console.log(err))
     }
