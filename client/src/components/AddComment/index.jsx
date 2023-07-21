@@ -22,7 +22,7 @@ export const AddComment = () => {
 
   const sumbitComment = async (params,event)=>{
     event.preventDefault()
-    axios.post('/comments/newComment', params).then(res=>{
+    axios.post('/comments/', params).then(res=>{
       dispatch(fetchCommentsByPostId(id))
       setCommentText('')
     })

@@ -1,3 +1,4 @@
+const { mongoose } = require('mongoose')
 const PostModel = require('../models/Post')
 const { ObjectId } = require('mongodb')
 
@@ -26,7 +27,7 @@ const dataConverter = (data)=>{ // Changes time format to more readable for clie
 module.exports = {
     createPost: async (req, res)=>{
         try {
-            const doc = new PostModel({
+            const newPost = PostModel.create({
                 title:req.body.title,
                 text: req.body.text,
                 imageUrl: req.body.imageUrl,
@@ -36,14 +37,12 @@ module.exports = {
                 tags: req.body.tags.split(','),
             })
 
-            const post = await doc.save()
-
-            res.json(post)
+            res.status(201).json(newPost)
             
         } catch (error) {
-            console.log(error);
+            console.log(error.message);
             res.status(500).json({
-                message:'Failed to create new post'
+                error:'Failed to create new post'
             })
         }
     },
@@ -57,18 +56,24 @@ module.exports = {
             }
         const posts = await PostModel.find().sort({createdAt:-1}).populate('author').exec();
         dataConverter(posts);
-        res.json(posts)
+        res.status(200).json(posts)
 
         } catch (error) {
-            console.log(error);
-            res.status(404).json({
-                message:'Cannot receive posts'
+            console.log(error.message);
+            res.status(500).json({
+                error:'Cannot receive posts from server'
             })
         }
     },
     getPostById: async (req, res)=>{
         try {
             const postId = req.params.id;
+
+            // Check if id is correct
+            if(!mongoose.Types.ObjectId.isValid(postId)) {
+                return res.status(404).json({error:'Post was not found!'})
+            } 
+
             const post = await PostModel.findOneAndUpdate(
                 {
                     _id: postId,
@@ -81,13 +86,15 @@ module.exports = {
                 }
             ).populate('author')
             dataConverter(post)
-    
-            return res.json(post)
+            if(!post){
+                return res.status(404).json({msg:'Post was not found!'})
+            }
+            res.status(200).json(post)
    
         } catch (error) {
-            console.log(error);
+            console.log(error.message);
             res.status(500).json({
-                message:'Cant receive a post'
+                error:'Cant receive a post from server'
             })
         }
     },
@@ -97,7 +104,8 @@ module.exports = {
             dataConverter(popularPosts)    
             return res.json(popularPosts)
         } catch (error) {
-            res.status(500).json({"error":"error.message"})
+            console.log(error.message);
+            res.status(500).json({error:error.message})
         }
     },
     getMyPosts: async(req,res)=>{
@@ -106,32 +114,42 @@ module.exports = {
             dataConverter(myPosts);
             return res.json(myPosts)
         } catch (error) {
+            console.log(error.message);
             res.status(500).json({"error":error.message})
         }
     },
     removePost: async (req,res)=>{
         try {
-            const postId = req.params.id;
-
-            await PostModel.findOneAndDelete(
+            const _id = req.params.id;
+            if(!mongoose.Types.ObjectId.isValid(_id)){
+                return res.status(404).json({error:'Post was not found!'})
+            }
+            const postToDelete = await PostModel.findOneAndDelete(
                 {
-                    _id:postId
+                    _id
                 },
-                res.json({
-                    message:'Post was succesfully deleted',
+                res.status(200).json({
+                    msg:'Post was succesfully deleted',
+                    deletedPost:postToDelete
                 })
             )
+            if(!postToDelete){
+                return res.status(404).json({error:'Post was not found'})
+            }
             
         } catch (error) {
-            console.log(error);
-            res.json(404).json({
-                message:'Post does not exist'
+            console.log(error.message);
+            res.json(500).json({
+                error:'Post was not deleted (server error)'
             })
         }
     },
     updatePost: async (req,res)=>{
         try {
             const _id = req.params.id;
+            if(!mongoose.Types.ObjectId.isValid(_id)){
+                return res.status(404).json({error:'Post was not found'})
+            }
                 await PostModel.findByIdAndUpdate({
                     _id,
                 },
@@ -144,13 +162,13 @@ module.exports = {
                     tags: req.body.tags.replace(' ','').split(','),
                 })
             
-            res.json({
+            res.status(200).json({
                 message:'Post was successfully updated',
             })
         } catch (error) {
-            console.log(error);
+            console.log(error.message);
             res.json(500).json({
-                message:'Post updating failed',
+                error:'Post updating failed (server error)',
             })
         }
     }
