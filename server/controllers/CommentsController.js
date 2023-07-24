@@ -1,6 +1,7 @@
 const CommentModel = require ('../models/Comment')
 const PostModel = require('../models/Post')
 const { mongoose } = require('mongoose')
+const { ObjectId} = require('mongodb')
 
 module.exports = {
     getCommentsByPostId: async (req,res) => {
@@ -23,7 +24,7 @@ module.exports = {
             const {parentPost,commentText} = req.body;
 
             const newComment = await CommentModel.create({
-                userId,
+                user: new ObjectId(userId),
                 parentPost,
                 text:commentText
             })

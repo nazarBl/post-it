@@ -1,0 +1,25 @@
+.commentSkeleton { 
+    display: "flex";
+    flex-direction: "column" 
+}
+
+.commentWrapper {
+    display: grid;
+    grid-template-columns: 9fr 1fr;
+    width: 100%;
+    &:hover {
+        cursor:pointer;
+        .editBtns {
+            opacity:1;
+            transition: all 0.2s linear;
+        }
+    }
+}
+
+
+
+.editBtns {
+    opacity:0;
+    margin: auto;
+    float:right;
+}

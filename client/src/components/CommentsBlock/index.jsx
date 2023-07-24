@@ -1,6 +1,7 @@
 import React from "react";
 
-import { SideBlock } from "./SideBlock";
+import style from './CommentsBlock.module.scss'
+import { SideBlock } from "../SideBlock";
 import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
@@ -9,10 +10,14 @@ import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
 import Skeleton from "@mui/material/Skeleton";
 import { useSelector } from "react-redux";
+import { IconButton } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Clear";
 
 export const CommentsBlock = ({isLoading=true}) => {
   const comments = useSelector(state=>state.comments.items)
-
+  const userId = useSelector(state=>state.auth.userData?._id)
+  
   if(comments) {
     isLoading = false
   }
@@ -32,15 +37,31 @@ export const CommentsBlock = ({isLoading=true}) => {
               </ListItemAvatar>
 
               {(isLoading) ? (
-                <div style={{ display: "flex", flexDirection: "column" }}>
+                <div className={style.commentSkeleton}>
                   <Skeleton variant="text" height={25} width={120} />
                   <Skeleton variant="text" height={18} width={230} />
                 </div>
               ) : (
-                <ListItemText
-                  primary={comment.user.fullName}
-                  secondary={comment.text}
-                />
+                <div className={style.commentWrapper}>
+
+                  <ListItemText
+                    primary={`${comment.user.fullName}` }
+                    secondary={comment.text}
+                  />
+                  { userId===comment.user._id ? 
+                  (<div className={style.editBtns}>
+                    <IconButton color="primary">
+                      <EditIcon />
+                    </IconButton>
+                    <IconButton color="secondary">
+                      <DeleteIcon />
+                    </IconButton>
+                  </div>)
+
+                  : ''
+                  }
+
+                </div>
               )}
             </ListItem>
             <Divider variant="inset" component="li" />

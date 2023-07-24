@@ -28,6 +28,8 @@ export const FullPost = () => {
   },[id, dispatch])
 
   const comments = useSelector(state=>state.comments.items)
+  const userId = useSelector(state=>state.auth._id)
+  console.log(userId+'FROM FULLPOST')
 
   if (isLoading) {
     return <Post isLoading={isLoading} isFullPost/>
@@ -50,7 +52,8 @@ export const FullPost = () => {
         </Post>
         
         <CommentsBlock 
-          comments={comments}
+          comments
+          userId = {userId}
         >
         </CommentsBlock>
         <AddComment/>

@@ -10,7 +10,7 @@ import axios from "../../axios.js";
 
 export const AddComment = () => {
   const dispatch = useDispatch();
-  let userAvatar = useSelector(state=>state.auth.userData?state.auth.userData.avatarUrl:'')
+  const userData = useSelector(state=>state.auth.userData)
 
   const {id} = useParams()
   const [commentText, setCommentText] = useState('')
@@ -19,7 +19,6 @@ export const AddComment = () => {
     commentText,
     parentPost:id,
   }
-
   const sumbitComment = async (params,event)=>{
     event.preventDefault()
     axios.post('/comments/', params).then(res=>{
@@ -35,11 +34,11 @@ export const AddComment = () => {
   
   return (
     <>
-    {userAvatar?(
+    {userData?(
       <div className={style.root}>
         <Avatar
           classes={{ root: style.avatar }}
-          src={userAvatar?`http://localhost:7000${userAvatar}`:'/noavatar.png'}
+          src={userData.avatarUrl?`http://localhost:7000${userData.avatarUrl}`:'/noavatar.png'}
         />
         <div className={style.form}>
           <TextField

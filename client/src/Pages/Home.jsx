@@ -16,7 +16,7 @@ export const Home = () => {
   const pathname = window.location.pathname;
   const [searchParams] = useSearchParams()
   let tagName = searchParams.get('tagName')
-
+  
   React.useEffect(()=>{
     switch (pathname) {
       case '/posts/popular':
@@ -39,7 +39,6 @@ export const Home = () => {
   },[dispatch, pathname, tagName, userData])
 
   const {posts, tags} =useSelector(state=>state.home)
-
   
   if (tagName){
     tagName = tagName.replace(' ','%20')
@@ -78,8 +77,8 @@ export const Home = () => {
               isLoading ={isTagsLoading}
             />
         <CommentsBlock 
-          postId='640cb4e527c515669ac3d310'
           isLoading={false}
+          userId = {userData?userData._id:''}
         />
         </Grid> 
       </Grid>
