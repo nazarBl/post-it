@@ -1,16 +1,18 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "../../axios.js";
 
-
-
 export const fetchCommentsByPostId = createAsyncThunk('comments/fetchCommentsByPostId', async (postId)=>{
     const {data} = await axios.get(`/comments/${postId}`)
     return data
 })
 
 export const fetchUpdateComment = createAsyncThunk('comments/fetchUpdateComment', async(params)=>{
-    const {data} = await axios.patch('/post/comments/edit')
+    const {data} = await axios.patch('/post/comments/edit', params)
     return data
+})
+
+export const fetchDeleteComment = createAsyncThunk('comments/fetchDeleteComment', async(id)=>{
+    await axios.delete(`/comments/${id}`)
 })
 
 const initialState = {
@@ -37,7 +39,17 @@ const commentsSlice = createSlice({
         [fetchCommentsByPostId.rejected]:(state)=>{
             state.status = 'error'
             state.items = []
-        }
+        },
+
+        [fetchDeleteComment.pending]:(state)=>{
+            state.status = 'deleting'
+        },
+        [fetchDeleteComment.fulfilled]:(state)=>{
+            state.status = 'deleted'
+        },
+        [fetchDeleteComment.rejected]:(state)=>{
+            state.status = 'error'
+        },
     }
 })
 
