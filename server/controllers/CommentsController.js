@@ -65,6 +65,9 @@ module.exports = {
             } 
 
             const commentToDelete = await CommentModel.findOneAndDelete({_id})
+            const parentPost = commentToDelete.parentPost
+            await PostModel.findOneAndUpdate({_id:parentPost},{$inc: {commentsCount:-1}})
+            
             res.status(200).json(commentToDelete)
         } catch (error) {
             console.log(error.message)

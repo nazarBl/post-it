@@ -29,7 +29,6 @@ export const FullPost = () => {
 
   const comments = useSelector(state=>state.comments.items)
   const userId = useSelector(state=>state.auth._id)
-  console.log(userId+'FROM FULLPOST')
 
   if (isLoading) {
     return <Post isLoading={isLoading} isFullPost/>
