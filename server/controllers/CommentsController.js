@@ -8,7 +8,7 @@ module.exports = {
         try {
             const {postId} = req.params
             if(!mongoose.Types.ObjectId.isValid(postId)) {
-                return res.status(404).json({error:'Post was not found!'})
+                return res.status(404).json({error:'Post was not found!(Bad id-format in URL?)'})
             } 
 
             const comments = await CommentModel.find({parentPost:postId}).populate('user')
@@ -44,7 +44,7 @@ module.exports = {
     },
     updateComment: async (req,res) => {
         try {
-            const _id = req.params.id
+            const _id = req.body.commentId
             if(!mongoose.Types.ObjectId.isValid(_id)) {
                 return res.status(404).json({error:'Post was not found!'})
             } 

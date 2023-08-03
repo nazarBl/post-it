@@ -4,10 +4,10 @@ import axios from "../../axios.js";
 export const fetchCommentsByPostId = createAsyncThunk('comments/fetchCommentsByPostId', async (postId)=>{
     const {data} = await axios.get(`/comments/${postId}`)
     return data
-})
+})  
 
 export const fetchUpdateComment = createAsyncThunk('comments/fetchUpdateComment', async(params)=>{
-    const {data} = await axios.patch('/post/comments/edit', params)
+    const {data} = await axios.patch(`/comments`, params)
     return data
 })
 
@@ -24,10 +24,11 @@ const commentsSlice = createSlice({
     name:'commentsSlice',
     initialState,
     reducers:{
-
+        
     },
 
     extraReducers:{
+        // GET COMMENTS BY POST'S ID
         [fetchCommentsByPostId.pending]:(state)=>{
             state.status = 'loading'
             state.items = []
@@ -41,6 +42,7 @@ const commentsSlice = createSlice({
             state.items = []
         },
 
+        // DELETE COMMENT
         [fetchDeleteComment.pending]:(state)=>{
             state.status = 'deleting'
         },

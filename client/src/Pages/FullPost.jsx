@@ -23,6 +23,7 @@ export const FullPost = () => {
       setIsLoading(false)
     }).catch((err)=>{
       console.warn(err);
+
       alert('Error while getting post') 
     })
   },[id, dispatch])
@@ -33,7 +34,7 @@ export const FullPost = () => {
   if (isLoading) {
     return <Post isLoading={isLoading} isFullPost/>
   }
-
+  
   return (
     <>  
         <Post
@@ -51,6 +52,7 @@ export const FullPost = () => {
         </Post>
         
         <CommentsBlock 
+          postId = {id}
           comments
           userId = {userId}
         >

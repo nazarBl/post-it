@@ -34,7 +34,6 @@ export const Profile = () => {
 
   const onSaveClick = () => {
     try {
-      console.log('Data to send: '+{fullName, email, userAvatar})
       const params = {
         fullName,
         email,
