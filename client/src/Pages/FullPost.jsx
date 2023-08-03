@@ -31,6 +31,12 @@ export const FullPost = () => {
   const comments = useSelector(state=>state.comments.items)
   const userId = useSelector(state=>state.auth._id)
 
+  console.log(comments.filter(com=>com.isEditable===true))
+  let isEditingComment = false;
+  if (comments.filter(comment=>comment.isEditable===true).length>0){
+    isEditingComment = true
+  }
+
   if (isLoading) {
     return <Post isLoading={isLoading} isFullPost/>
   }
@@ -57,7 +63,10 @@ export const FullPost = () => {
           userId = {userId}
         >
         </CommentsBlock>
-        <AddComment/>
+        {
+          !isEditingComment &&<AddComment />
+        }
+        
     </>
   )
 }
