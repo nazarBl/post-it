@@ -19,23 +19,20 @@ export const FullPost = () => {
   React.useEffect(()=>{
     axios.get(`/posts/${id}`).then(res=>{
       setPost(res.data);
-      dispatch(fetchCommentsByPostId(id))
       setIsLoading(false)
     }).catch((err)=>{
       console.warn(err);
 
       alert('Error while getting post') 
     })
+    dispatch(fetchCommentsByPostId(id))
   },[id, dispatch])
 
-  const comments = useSelector(state=>state.comments.items)
+  const comments = useSelector(state => state.comments.items)
+  console.log(comments)
   const userId = useSelector(state=>state.auth._id)
-
-  console.log(comments.filter(com=>com.isEditable===true))
+  
   let isEditingComment = false;
-  if (comments.filter(comment=>comment.isEditable===true).length>0){
-    isEditingComment = true
-  }
 
   if (isLoading) {
     return <Post isLoading={isLoading} isFullPost/>
@@ -51,7 +48,7 @@ export const FullPost = () => {
           dateOfCreate={post.dateOfCreate}
           createdAt={post.createdAt}
           viewsCount={post.viewsCount}
-          commentsCount={comments.length}
+          commentsCount={comments && comments.length}
           tags={post.tags}
           >
           <ReactMarkdown children={post.text}/>
@@ -59,8 +56,9 @@ export const FullPost = () => {
         
         <CommentsBlock 
           postId = {id}
-          comments
           userId = {userId}
+          comments={comments}
+          isLoading={isLoading}
         >
         </CommentsBlock>
         {

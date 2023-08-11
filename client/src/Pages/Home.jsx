@@ -4,7 +4,7 @@ import {Grid} from '@mui/material';
 
 import { Post } from '../components/';
 import { TagsBlock } from '../components';
-import { CommentsBlock } from '../components/';
+import { CommentsBlock } from '../components/CommentsBlock';
 import { fetchMyPosts, fetchPopularPosts, fetchPosts, fetchPostsByTagFilter, fetchTags } from '../redux/slices/homeSlice.js';
 import TabsMenu from '../components/TabsMenu';
 import {useSearchParams} from 'react-router-dom';
@@ -38,7 +38,8 @@ export const Home = () => {
       dispatch(fetchTags())
   },[dispatch, pathname, tagName, userData])
 
-  const {posts, tags} =useSelector(state=>state.home)
+  const {posts, tags } =useSelector(state=>state.home)
+  const comments = useSelector(state=>state.comments)
   
   if (tagName){
     tagName = tagName.replace(' ','%20')
@@ -46,10 +47,13 @@ export const Home = () => {
     
   const isPostsLoading = posts.status === 'loading';
   const isTagsLoading = tags.status === 'loading';
+  const isCommentsLoading = comments.status === 'loading';
   
   return (
     <>
       <TabsMenu/>
+
+      {/* POSTS COLUMN */}
       <Grid container spacing={4}>
         <Grid xs={8} item>
             {(isPostsLoading? [...Array(5)]: posts.items).map((post, index)=>
@@ -77,8 +81,9 @@ export const Home = () => {
               isLoading ={isTagsLoading}
             />
         <CommentsBlock 
-          isLoading={false}
+          isLoading={isCommentsLoading}
           userId = {userData?userData._id:''}
+          comments = {comments.items}
         />
         </Grid> 
       </Grid>
