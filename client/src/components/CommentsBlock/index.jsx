@@ -51,8 +51,6 @@ export const CommentsBlock = ({userId, postId, isEditingComment, comments, isLoa
                 )}
               </ListItemAvatar>
 
-              {/* SKELETON or COMMENT */}
-                
                 <Comment
                   isLoading = {isLoading}
                   comment = {comment} 

@@ -29,15 +29,13 @@ export const FullPost = () => {
   },[id, dispatch])
 
   const comments = useSelector(state => state.comments.items)
-  console.log(comments)
-  const userId = useSelector(state=>state.auth._id)
+  const userId = useSelector(state=>state.auth.userData._id)
   
   let isEditingComment = false;
 
   if (isLoading) {
     return <Post isLoading={isLoading} isFullPost/>
   }
-  
   return (
     <>  
         <Post

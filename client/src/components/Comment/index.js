@@ -17,6 +17,8 @@ const Comment = (
         isLoading,
         }) => {
     return (
+
+        // SKELETON or COMMENT
         isLoading ? 
             <div className={style.commentSkeleton}>
                 <Skeleton variant="text" height={25} width={120} />
@@ -31,7 +33,7 @@ const Comment = (
                 : 
                 <>
                     { userId===comment.user._id ? 
-                    (<div className = {style.editSector}>
+                    <div className = {style.editSector}>
                         <ListItemText
                         primary={`${comment.user.fullName}` }
                         />
@@ -42,34 +44,32 @@ const Comment = (
                         defaultValue={comment.text}
                         onChange={(e)=>onChangeEditTextComment(e)}
                     />
-                    </div>) :
+                    </div> :
                     <ListItemText
                     primary={`${comment.user.fullName}` }
                     secondary={comment.text}
                     /> }
                 </>
                 }
-                { userId===comment.user._id ? 
-                (<div className={style.acceptBtn}>
-                {comment.isEditable && !isEditingComment ? 
-                <div>
-                    <IconButton color="primary" onClick = {(e)=>updateComment(e,comment._id, {text:commentText, isEditable:false})}>
-                    <CheckIcon />
-                    </IconButton>
-                </div> 
-                    :
-                <div className={style.editBtns}>
-                    <IconButton color="primary" onClick = {(e)=>updateComment(e,comment._id, {isEditable:true})}>
-                    <EditIcon />
-                    </IconButton>
-                    <IconButton color="secondary" onClick = {()=>removeComment(comment._id)}>
-                    <DeleteIcon />
-                    </IconButton>
-                </div>}
                 
+                { userId===comment.user._id && 
+                (<div className={style.acceptBtn}>
+                    {comment.isEditable && !isEditingComment ? 
+                    <div>
+                        <IconButton color="primary" onClick = {(e)=>updateComment(e,comment._id, {text:commentText, isEditable:false})}>
+                        <CheckIcon />
+                        </IconButton>
+                    </div> 
+                        :
+                    <div className={style.editBtns}>
+                        <IconButton color="primary" onClick = {(e)=>updateComment(e,comment._id, {isEditable:true})}>
+                        <EditIcon />
+                        </IconButton>
+                        <IconButton color="secondary" onClick = {()=>removeComment(comment._id)}>
+                        <DeleteIcon />
+                        </IconButton>
+                    </div>}
                 </div>)
-
-                : ''
                 }
 
             </div>
