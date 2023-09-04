@@ -15,7 +15,10 @@ const UserSchem = new mongoose.Schema({
             required: true,
         },
         regTime:String,
-        avatarUrl:String,
+        avatarUrl:{
+            type:String,
+            default:'/uploads/avatars/noavatar.png'
+        }
 },{
     timestamps:true
 })

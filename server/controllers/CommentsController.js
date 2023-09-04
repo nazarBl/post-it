@@ -18,6 +18,14 @@ module.exports = {
             return res.status(500).json({error:'Failed get comments for this post from server!'})
         }
     },
+    getLastComments: async (req,res) => {
+        try {
+            const lastComments = await CommentModel.find().limit(5).populate('user')
+            return res.status(200).json(lastComments)
+        } catch (error) {
+            return res.status(500).json({error:'Failed to load last comments (server error)'})
+        }
+    },
     createNewComment: async (req,res) => {
         try {
             const userId = req.userId

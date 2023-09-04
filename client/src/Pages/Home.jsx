@@ -8,6 +8,7 @@ import { CommentsBlock } from '../components/CommentsBlock';
 import { fetchMyPosts, fetchPopularPosts, fetchPosts, fetchPostsByTagFilter, fetchTags } from '../redux/slices/homeSlice.js';
 import TabsMenu from '../components/TabsMenu';
 import {useSearchParams} from 'react-router-dom';
+import { fetchLastComments } from '../redux/slices/commentsSlice';
 
 export const Home = () => {
   const {userData} = useSelector(state=>state.auth)
@@ -16,7 +17,11 @@ export const Home = () => {
   const pathname = window.location.pathname;
   const [searchParams] = useSearchParams()
   let tagName = searchParams.get('tagName')
-  
+
+  React.useEffect(()=>{
+    dispatch(fetchLastComments())
+  },[dispatch])
+
   React.useEffect(()=>{
     switch (pathname) {
       case '/posts/popular':
@@ -29,7 +34,9 @@ export const Home = () => {
         dispatch(fetchMyPosts(userData._id)) 
         break;
       case '/':
-        dispatch(fetchPosts()) 
+        dispatch(fetchPosts())
+        dispatch(fetchLastComments())
+
         break;
       
       default:
@@ -37,7 +44,7 @@ export const Home = () => {
     }
       dispatch(fetchTags())
   },[dispatch, pathname, tagName, userData])
-
+  
   const {posts, tags } =useSelector(state=>state.home)
   const comments = useSelector(state=>state.comments)
   
@@ -81,9 +88,11 @@ export const Home = () => {
               isLoading ={isTagsLoading}
             />
         <CommentsBlock 
+          title ='Last comments'
           isLoading={isCommentsLoading}
           userId = {userData?userData._id:''}
           comments = {comments.items}
+          onlyLastComments={true}
         />
         </Grid> 
       </Grid>

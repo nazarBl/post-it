@@ -8,6 +8,7 @@ import CheckIcon from '@mui/icons-material/Check';
 
 const Comment = (
         {comment,
+        onlyLastComments,
         updateComment,
         onChangeEditTextComment,
         removeComment,
@@ -23,9 +24,10 @@ const Comment = (
             <div className={style.commentSkeleton}>
                 <Skeleton variant="text" height={25} width={120} />
                 <Skeleton variant="text" height={18} width={230} />
-            </div> :
+            </div> 
+            :
             <div className={style.commentWrapper}>
-                {!comment.isEditable ? 
+                {!comment.isEditable? 
                 <ListItemText
                     primary={comment.user.fullName}
                     secondary={comment.text}
@@ -33,43 +35,49 @@ const Comment = (
                 : 
                 <>
                     { userId===comment.user._id ? 
-                    <div className = {style.editSector}>
+                        <div className = {style.editSector}>
+                            <ListItemText
+                            primary={`${comment.user.fullName}` }
+                            />
+                            <TextField 
+                            label="Edit your comment"
+                            size="small"
+                            color="secondary"
+                            defaultValue={comment.text}
+                            onChange={(e)=>onChangeEditTextComment(e)}
+                        />
+                        </div>
+                        :
                         <ListItemText
                         primary={`${comment.user.fullName}` }
-                        />
-                        <TextField 
-                        label="Edit your comment"
-                        size="small"
-                        color="secondary"
-                        defaultValue={comment.text}
-                        onChange={(e)=>onChangeEditTextComment(e)}
-                    />
-                    </div> :
-                    <ListItemText
-                    primary={`${comment.user.fullName}` }
-                    secondary={comment.text}
-                    /> }
+                        secondary={comment.text}
+                    />}
                 </>
                 }
                 
-                { userId===comment.user._id && 
-                (<div className={style.acceptBtn}>
-                    {comment.isEditable && !isEditingComment ? 
-                    <div>
-                        <IconButton color="primary" onClick = {(e)=>updateComment(e,comment._id, {text:commentText, isEditable:false})}>
-                        <CheckIcon />
+                {(userId===comment.user._id && comment.isEditable) ?
+
+                    // CHECK ICON
+                    <div className={style.acceptBtn}>
+                        <IconButton color="primary" onClick = {()=>updateComment(comment._id, {text:commentText, isEditable:false})}>
+                            <CheckIcon />
                         </IconButton>
-                    </div> 
+                    </div>
                         :
-                    <div className={style.editBtns}>
-                        <IconButton color="primary" onClick = {(e)=>updateComment(e,comment._id, {isEditable:true})}>
-                        <EditIcon />
-                        </IconButton>
-                        <IconButton color="secondary" onClick = {()=>removeComment(comment._id)}>
-                        <DeleteIcon />
-                        </IconButton>
-                    </div>}
-                </div>)
+
+                    // EDIT ICONS
+                    <>
+                        { (userId===comment.user._id && !isEditingComment && !comment.isEditable && !onlyLastComments) &&
+                            <div className={style.editBtns}>
+                                <IconButton color="primary" onClick = {()=>updateComment(comment._id, {isEditable:true})}>
+                                    <EditIcon />
+                                </IconButton>
+                                <IconButton color="secondary" onClick = {()=>removeComment(comment._id)}>
+                                    <DeleteIcon />
+                                </IconButton>
+                            </div>
+                        }
+                    </>
                 }
 
             </div>

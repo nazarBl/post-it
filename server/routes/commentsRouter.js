@@ -4,6 +4,7 @@ const checkAuth = require('../middlewares/checkAuth.js')
 
 const commentsRouter = express.Router()
 
+commentsRouter.get('/actual',checkAuth, CommentsController.getLastComments)
 commentsRouter.get('/:postId', CommentsController.getCommentsByPostId)
 commentsRouter.post('/', checkAuth, CommentsController.createNewComment)
 commentsRouter.patch('/', checkAuth, CommentsController.updateComment)

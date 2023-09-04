@@ -12,7 +12,8 @@ import { fetchCommentsByPostId } from '../redux/slices/commentsSlice';
 export const FullPost = () => {
   const [post, setPost] = React.useState();
   const [isLoading, setIsLoading] = React.useState(true);
-
+  const [isEditingComment, setIsEditingComment] = React.useState(false)
+  
   const dispatch = useDispatch()
   const {id} = useParams();
   
@@ -31,8 +32,6 @@ export const FullPost = () => {
   const comments = useSelector(state => state.comments.items)
   const userId = useSelector(state=>state.auth.userData._id)
   
-  let isEditingComment = false;
-
   if (isLoading) {
     return <Post isLoading={isLoading} isFullPost/>
   }
@@ -53,10 +52,13 @@ export const FullPost = () => {
         </Post>
         
         <CommentsBlock 
-          postId = {id}
-          userId = {userId}
+          title='Comments'
+          postId={id}
+          userId={userId}
           comments={comments}
           isLoading={isLoading}
+          isEditingComment={isEditingComment}
+          setIsEditingComment={setIsEditingComment}
         >
         </CommentsBlock>
         {

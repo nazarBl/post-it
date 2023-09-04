@@ -6,6 +6,11 @@ export const fetchCommentsByPostId = createAsyncThunk('comments/fetchCommentsByP
     return data
 })  
 
+export const fetchLastComments = createAsyncThunk('comments/fetchLastComments', async()=>{
+    const {data} = await axios.get('/comments/actual')
+    return data
+})
+
 export const fetchUpdateComment = createAsyncThunk('comments/fetchUpdateComment', async(params)=>{
     const {data} = await axios.patch(`/comments`, params)
     return data
@@ -24,7 +29,7 @@ const commentsSlice = createSlice({
     name:'commentsSlice',
     initialState,
     reducers:{
-        
+
     },
 
     extraReducers:{
@@ -38,6 +43,20 @@ const commentsSlice = createSlice({
             state.items = action.payload
         },
         [fetchCommentsByPostId.rejected]:(state)=>{
+            state.status = 'error'
+            state.items = []
+        },
+
+        // GET LAST COMMENTS
+        [fetchLastComments.pending]:(state)=>{
+            state.status = 'loading'
+            state.items = []
+        },
+        [fetchLastComments.fulfilled]:(state, action)=>{
+            state.status = 'loaded'
+            state.items = action.payload
+        },
+        [fetchLastComments.rejected]:(state)=>{
             state.status = 'error'
             state.items = []
         },
