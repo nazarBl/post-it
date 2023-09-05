@@ -50,18 +50,17 @@ export const AddPost = () => {
         tags,
         imageUrl,
       }
-      const {data} = isEditing?
+      isEditing?
       await axios.patch(`/posts/${id}`, params) : // update post after editing
       await axios.post('/posts/create', params) // create new post
 
-      const _id = isEditing? id : data._id;
-      navigate(`/posts/${_id}`)
+      navigate(`/`)
     } catch (error) {
       console.warn(error)
     }
   }
   
-  React.useEffect(()=>{
+  React.useEffect(()=>{ //Loading post to edit ( if post exists )
     if(id){
       axios.get(`/posts/${id}`).then(({data})=>{
         setTitle(data.title);

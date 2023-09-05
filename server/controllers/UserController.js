@@ -4,7 +4,7 @@ const bcrypt =require('bcrypt')
 const {validationResult} = require('express-validator')
 const UserModel = require('../models/User')
 
-const dataConverter = (data)=>{
+const dataConverter = (data)=>{               // to replace
     data.regTime = data.createdAt.toString().split(' ').slice(1,4). join(' ')
     return data;
 }

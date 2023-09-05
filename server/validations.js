@@ -15,7 +15,7 @@ module.exports = {
     ],
     newPostValidation : [
         body('title','Enter post title!').isLength({min:3}).isString(),
-        body('text', 'Enter post text!').isLength({min:10}).isString(),
+        body('text', 'Enter post text!').isLength({min:1}).isString(), // Should warn client if too short text (to fix)
         body('tags', 'Wrong tags format').optional().isString(),
         body('imageUrl', 'Wrong image link').optional().isString(),
     ]

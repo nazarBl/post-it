@@ -117,7 +117,7 @@ const homeSlice = createSlice({
         },
 
         //Delete post
-        [fetchRemovePost.pending]:(state, action)=>{
+        [fetchRemovePost.fulfilled]:(state, action)=>{
             state.posts.items = state.posts.items.filter(post=>post._id!==action.meta.arg)
         }
     }

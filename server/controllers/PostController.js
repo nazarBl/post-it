@@ -34,7 +34,7 @@ module.exports = {
                 author: req.userId,
                 viewsCount: req.body.viewsCount,
                 commentsCount:0,
-                tags: req.body.tags.split(','),
+                tags: req.body.tags?.split(','),
             })
 
             res.status(201).json(newPost)
@@ -130,7 +130,6 @@ module.exports = {
                 },
                 res.status(200).json({
                     msg:'Post was succesfully deleted',
-                    deletedPost:postToDelete
                 })
             )
             if(!postToDelete){
